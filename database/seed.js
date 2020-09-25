@@ -6,28 +6,34 @@ const stylesArr = ['Digital Only', 'Canvas 8x10', 'Canvas 12x16', 'Canvas 18x24'
 
 const createUser = () => {
   const user = {};
-  user.userName = faker.internet.userName();
+  user.userName = faker.name.firstName();
   user.userPhoto = faker.internet.avatar();
   return user;
 };
 
-const createReview = () => {
-  const review = {};
-  review.userID = Math.ceil(Math.random() * (100));
-  review.review = faker.lorem.sentence();
-  review.reviewPic = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(41))}`;
-  review.reviewRating = Math.ceil(Math.random() * (5));
-  review.reviewDate = `${datesArr[Math.floor(Math.random() * Math.floor(datesArr.length))]}`;
-  review.style = `${stylesArr[Math.floor(Math.random() * Math.floor(stylesArr.length))]}`;
-  return review;
+const createReviewForItem = () => {
+  const reviewforItem = {};
+  reviewforItem.userID = Math.ceil(Math.random() * (100));
+  reviewforItem.review = faker.lorem.sentence();
+  reviewforItem.reviewPicDog = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(40))}`;
+  reviewforItem.reviewPicCat = `http://bit.ly/etsycats${Math.ceil(Math.random() * Math.ceil(40))}`;
+  reviewforItem.reviewRating = Math.ceil(Math.random() * (5));
+  reviewforItem.reviewDate = `${datesArr[Math.floor(Math.random() * Math.floor(datesArr.length))]}`;
+  reviewforItem.style = `${stylesArr[Math.floor(Math.random() * Math.floor(stylesArr.length))]}`;
+  return reviewforItem;
 };
 
-const createItemReview = () => {
-  const itemReview = {};
-  itemReview.userID = Math.floor(Math.random() * (100));
-  itemReview.purchasedItemDescription = faker.lorem.sentence();
-  itemReview.purchasedItemPic = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(41))}`;
-  return itemReview;
+const createReviewForShop = () => {
+  const reviewForShop = {};
+  reviewForShop.userID = Math.floor(Math.random() * (100));
+  reviewForShop.review = faker.lorem.sentence();
+  reviewForShop.reviewPic = faker.image.nature();
+  reviewForShop.reviewRating = Math.ceil(Math.random() * (5));
+  reviewForShop.reviewDate = `${datesArr[Math.floor(Math.random() * Math.floor(datesArr.length))]}`;
+  reviewForShop.purchasedItemDescription = faker.lorem.sentence();
+  reviewForShop.purchasedItemPicDog = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(40))}`;
+  reviewForShop.purchasedItemPicCat = `http://bit.ly/etsycats${Math.ceil(Math.random() * Math.ceil(40))}`;
+  return reviewForShop;
 };
 
 const createUsers = () => {
@@ -38,26 +44,26 @@ const createUsers = () => {
   return usersArr;
 };
 
-const createReviews = () => {
-  const reviewsArr = [];
-  for (let i = 0; i < 10; i += 1) {
-    reviewsArr.push(createReview());
+const createReviewsForItem = () => {
+  const reviewsForItemArr = [];
+  for (let i = 0; i < 100; i += 1) {
+    reviewsForItemArr.push(createReviewForItem());
   }
-  return reviewsArr;
+  return reviewsForItemArr;
 };
 
-const createItemReviews = () => {
-  const itemsReviewArr = [];
-  for (let i = 0; i < 10; i += 1) {
-    itemsReviewArr.push(createItemReview());
+const createReviewsForShop = () => {
+  const reviewsForShopArr = [];
+  for (let i = 0; i < 100; i += 1) {
+    reviewsForShopArr.push(createReviewForShop());
   }
-  return itemsReviewArr;
+  return reviewsForShopArr;
 };
 
 function seedMe() {
-  const reviewsArr = createReviews();
+  const reviewsForItemArr = createReviewsForItem();
   const usersArr = createUsers();
-  const itemsReviewArr = createItemReviews();
+  const reviewsForShopArr = createReviewsForShop();
   usersArr.forEach((user) => {
     db.query(`INSERT INTO users (userName, userPhoto) VALUES ("${user.userName}", "${user.userPhoto}")`, (err) => {
       if (err) {
@@ -67,8 +73,8 @@ function seedMe() {
       }
     });
   });
-  reviewsArr.forEach((review) => {
-    db.query(`INSERT INTO reviewsItem(userID, review, reviewPic, reviewRating, reviewDate, style) VALUES ( ${review.userID}, "${review.review}", "${review.reviewPic}", "${review.reviewRating}", "${review.reviewDate}", "${review.style}")`, (err) => {
+  reviewsForItemArr.forEach((review) => {
+    db.query(`INSERT INTO reviewsForItem(userID, review, reviewPicDog, reviewPicCat, reviewRating, reviewDate, style) VALUES ( ${review.userID}, "${review.review}", "${review.reviewPicDog}", "${review.reviewPicCat}", "${review.reviewRating}", "${review.reviewDate}", "${review.style}")`, (err) => {
       if (err) {
         console.error(err);
       } else {
@@ -76,8 +82,8 @@ function seedMe() {
       }
     });
   });
-  itemsReviewArr.forEach((itemReview) => {
-    db.query(`INSERT INTO reviewsShop(userID, purchasedItemDescription, purchasedItemPic) VALUES ( ${itemReview.userID}, "${itemReview.purchasedItemDescription}", "${itemReview.purchasedItemPic}")`, (err) => {
+  reviewsForShopArr.forEach((reviewShop) => {
+    db.query(`INSERT INTO reviewsForShop(userID, review, reviewPic, reviewRating, reviewDate, purchasedItemDescription, purchasedItemPic) VALUES ( ${reviewShop.userID}, "${reviewShop.review}", "${reviewShop.reviewPic}", "${reviewShop.reviewRating}", "${reviewShop.reviewDate}", "${reviewShop.purchasedItemDescription}", "${reviewShop.purchasedItemPic}")`, (err) => {
       if (err) {
         console.error(err);
       } else {
@@ -90,5 +96,3 @@ function seedMe() {
 }
 
 seedMe();
-
-// product.image = `http://lorempixel.com/400/400/technics/${Math.ceil(Math.random() * Math.ceil(10))}`

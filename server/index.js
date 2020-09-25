@@ -15,19 +15,9 @@ server.use(morgan('dev'));
 
 server.use(express.static(path.join(__dirname, '../client/dist')));
 
-// routes for getting all users with reviews
-server.get('/users/all', (req, res) => {
-  dbhelpers.getAllUsers((err, results) => {
-    if (err) {
-      res.status(404).send(err);
-    } else {
-      res.status(200).send(results);
-    }
-  });
-});
-
+// route for getting all reviews for item
 server.get('/reviewsItem/all', (req, res) => {
-  dbhelpers.getAllReviewsItem((err, results) => {
+  dbhelpers.getAllReviewsForItem((err, results) => {
     if (err) {
       res.status(404).send(err);
     } else {
@@ -35,9 +25,16 @@ server.get('/reviewsItem/all', (req, res) => {
     }
   });
 });
-// routes get for one user's review
-// server.get('/api/reveiews/:id', (req, res) => {
 
-// });
+// route for getting all reviews for shop
+server.get('/reviewsShop/all', (req, res) => {
+  dbhelpers.getAllReviewsForShop((err, results) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send(results);
+    }
+  });
+});
 
 server.listen(port, () => console.log(`listening on ${port}`));
