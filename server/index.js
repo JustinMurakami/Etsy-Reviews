@@ -16,8 +16,8 @@ server.use(morgan('dev'));
 server.use(express.static(path.join(__dirname, '../client/dist')));
 
 // routes for getting all users with reviews
-server.get('/reviews/all', (req, res) => {
-  dbhelpers.getAll((err, results) => {
+server.get('/users/all', (req, res) => {
+  dbhelpers.getAllUsers((err, results) => {
     if (err) {
       res.status(404).send(err);
     } else {
@@ -26,6 +26,15 @@ server.get('/reviews/all', (req, res) => {
   });
 });
 
+server.get('/reviewsItem/all', (req, res) => {
+  dbhelpers.getAllReviewsItem((err, results) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send(results);
+    }
+  });
+});
 // routes get for one user's review
 // server.get('/api/reveiews/:id', (req, res) => {
 

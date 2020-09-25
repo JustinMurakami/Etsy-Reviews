@@ -1,8 +1,8 @@
 const db = require('./index.js');
 
 const dbhelpers = {
-  getAll: (callback) => {
-    const queryString = 'SELECT * FROM reviews';
+  getAllUsers: (callback) => {
+    const queryString = 'SELECT * FROM users';
     db.query(queryString, (err, result) => {
       if (err) {
         callback(err);

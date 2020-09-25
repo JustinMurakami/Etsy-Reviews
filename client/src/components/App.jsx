@@ -6,24 +6,24 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reviews: [],
+      users: [],
     };
-    this.getReviews = this.getReviews.bind(this);
+    this.getUsers = this.getUsers.bind(this);
   }
 
   componentDidMount() {
-    this.getReviews();
+    this.getUsers();
     // const { reviews } = this.state;
     // this.setState({
     //   review: reviews[0],
     // });
   }
 
-  getReviews() {
-    axios.get('/reviews/all')
+  getUsers() {
+    axios.get('/users/all')
       .then((results) => {
         this.setState({
-          reviews: results.data,
+          users: results.data,
         }, () => console.log(this.state));
       })
       .catch((err) => {
@@ -32,10 +32,10 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { reviews } = this.state;
+    const { users } = this.state;
     return (
       <div className="reviews">
-        <Reviews reviews={reviews} />
+        <Reviews users={users} />
       </div>
     );
   }
