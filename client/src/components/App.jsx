@@ -1,29 +1,28 @@
 import React from 'react';
 import axios from 'axios';
-import Reviews from './Reviews.jsx';
+import ReviewsForItem from './ReviewsForItems.jsx';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: [],
+      reviewsForItem: [],
+      reviewsForShop: [],
     };
-    this.getUsers = this.getUsers.bind(this);
+    this.getAllReviewsForItem = this.getAllReviewsForItem.bind(this);
+    this.getAllReviewsForShop = this.getAllReviewsForShop.bind(this);
   }
 
   componentDidMount() {
-    this.getUsers();
-    // const { reviews } = this.state;
-    // this.setState({
-    //   review: reviews[0],
-    // });
+    this.getAllReviewsForItem();
+    this.getAllReviewsForShop();
   }
 
-  getUsers() {
-    axios.get('/users/all')
+  getAllReviewsForItem() {
+    axios.get('/reviewsItem/all')
       .then((results) => {
         this.setState({
-          users: results.data,
+          reviewsForItem: results.data,
         }, () => console.log(this.state));
       })
       .catch((err) => {
@@ -31,11 +30,26 @@ export default class App extends React.Component {
       });
   }
 
+  getAllReviewsForShop() {
+    axios.get('/reviewsShop/all')
+      .then((results) => {
+        this.setState({
+          reviewsForShop: results.data,
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   render() {
-    const { users } = this.state;
+    const { reviewsForItem, reviewsForShop } = this.state;
     return (
       <div className="reviews">
-        <Reviews users={users} />
+        <div className="reviews reviewsTotal">
+          <h3 className="text-body">{reviewsForShop.length} reviews ★★★★★</h3>
+        </div>
+        <ReviewsForItem reviewsForItem={reviewsForItem} />
       </div>
     );
   }

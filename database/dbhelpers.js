@@ -1,6 +1,6 @@
 const db = require('./index.js');
 
-const dbhelpers = {
+const dbHelpers = {
   getAllReviewsForItem: (callback) => {
     const queryString = 'Select * from users, reviewsForItem where users.id = reviewsForItem.userID;';
     db.query(queryString, (err, result) => {
@@ -23,4 +23,4 @@ const dbhelpers = {
   },
 };
 
-module.exports = dbhelpers;
+module.exports = dbHelpers;

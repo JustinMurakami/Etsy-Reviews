@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
-const dbhelpers = require('../database/dbhelpers.js');
+const dbHelpers = require('../database/dbHelpers.js');
 
 const server = express();
 const port = 8003;
@@ -17,7 +17,7 @@ server.use(express.static(path.join(__dirname, '../client/dist')));
 
 // route for getting all reviews for item
 server.get('/reviewsItem/all', (req, res) => {
-  dbhelpers.getAllReviewsForItem((err, results) => {
+  dbHelpers.getAllReviewsForItem((err, results) => {
     if (err) {
       res.status(404).send(err);
     } else {
@@ -28,7 +28,7 @@ server.get('/reviewsItem/all', (req, res) => {
 
 // route for getting all reviews for shop
 server.get('/reviewsShop/all', (req, res) => {
-  dbhelpers.getAllReviewsForShop((err, results) => {
+  dbHelpers.getAllReviewsForShop((err, results) => {
     if (err) {
       res.status(404).send(err);
     } else {
