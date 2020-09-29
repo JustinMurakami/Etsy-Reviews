@@ -133,6 +133,7 @@ export default class App extends React.Component {
         <Pagination
           reviewsPerPage={reviewsPerPage}
           totalReviews={reviewsForShop.length}
+          paginate={paginate}
         />
       </div>
     );
