@@ -2,7 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import ReviewsForItem from './ReviewsForItems.jsx';
 import ReviewsForShop from './ReviewsForShop.jsx';
+import Pagination from './Pagination.jsx';
 import { FaStar, FaCaretDown } from 'react-icons/fa';
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -11,6 +13,9 @@ export default class App extends React.Component {
       reviewsForItem: [],
       reviewsForShop: [],
       tab: 'reviewsItem',
+      loading: false,
+      currentPage: 1,
+      reviewsPerPage: 4,
     };
     this.getAllReviewsForItem = this.getAllReviewsForItem.bind(this);
     this.getAllReviewsForShop = this.getAllReviewsForShop.bind(this);
@@ -50,15 +55,15 @@ export default class App extends React.Component {
   getRating(rating) {
     if (rating === 1) {
       return <FaStar />
-    } else if (rating === 2) {
-      return <div><FaStar/><FaStar/></div>
-    } else if (rating === 3) {
-      return <div><FaStar/><FaStar/><FaStar/></div>
-    } else if (rating === 4) {
-      return <div><FaStar/><FaStar/><FaStar/><FaStar/></div>
-    } else {
-      return <div><FaStar/><FaStar/><FaStar/><FaStar/><FaStar/></div>
     }
+    if (rating === 2) {
+      return <div><FaStar/><FaStar/></div>
+    } if (rating === 3) {
+      return <div><FaStar/><FaStar/><FaStar/></div>
+    } if (rating === 4) {
+      return <div><FaStar/><FaStar/><FaStar/><FaStar/></div>
+    } 
+      return <div><FaStar/><FaStar/><FaStar/><FaStar/><FaStar/></div>
   }
 
   handleClick(e) {
@@ -68,7 +73,16 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { reviewsForItem, reviewsForShop, tab } = this.state;
+    const { reviewsForItem, reviewsForShop, tab, loading, currentPage, reviewsPerPage } = this.state;
+    const indexOfLastReview = currentPage * reviewsPerPage;
+    const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
+    const currentReviewsForItem = reviewsForItem.slice(indexOfFirstReview, indexOfLastReview);
+    const currentReviewsForShop = reviewsForShop.slice(indexOfFirstReview, indexOfLastReview);
+
+    const paginate = (pageNumber) => this.setState({
+      currentPage: pageNumber,
+    });
+
     if (tab === 'reviewsItem') {
       return (
         <div className="reviews">
@@ -84,7 +98,16 @@ export default class App extends React.Component {
               <button type="button" className="reviews-sort-list-button">Sort by: Recommended <FaCaretDown /></button>
             </div>
           </div>
-          <ReviewsForItem reviewsForItem={reviewsForItem} getRating={this.getRating} />
+          <ReviewsForItem
+            reviewsForItem={currentReviewsForItem}
+            getRating={this.getRating}
+            loading={loading}
+          />
+          <Pagination
+            reviewsPerPage={reviewsPerPage}
+            totalReviews={reviewsForItem.length}
+            paginate={paginate}
+          />
         </div>
       );
     }
@@ -102,7 +125,15 @@ export default class App extends React.Component {
             <button type="button" className="reviews-sort-list-button">Sort by: Recommended </button>
           </div>
         </div>
-        <ReviewsForShop reviewsForShop={reviewsForShop} getRating={this.getRating} />
+        <ReviewsForShop
+          reviewsForShop={currentReviewsForShop}
+          getRating={this.getRating}
+          loading={loading}
+        />
+        <Pagination
+          reviewsPerPage={reviewsPerPage}
+          totalReviews={reviewsForShop.length}
+        />
       </div>
     );
   }

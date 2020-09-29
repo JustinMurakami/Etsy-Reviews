@@ -2,12 +2,15 @@ import React from 'react';
 import { FaStar } from 'react-icons/fa';
 
 const ReviewsforItem = (props) => {
-  const { reviewsForItem, getRating } = props;
-  const fourReviews = reviewsForItem.slice(0, 4);
+  const { reviewsForItem, getRating, loading } = props;
+
+  if (loading) {
+    return <h2> Loading...</h2>;
+  }
   return (
     <div>
-      {fourReviews.map((review, index) => (
-        <div className="ReviewsListForItems" key={index}>
+      {reviewsForItem.map((review, index) => (
+        <div className="ReviewsListForItems" key={review.id}>
           <p className="reviews-usertitle">
             <img src={review.userPhoto} className="reviews-userphoto" alt="" />
             <span id="review-username">{review.userName}</span>
