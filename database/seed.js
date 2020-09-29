@@ -6,7 +6,7 @@ const stylesArr = ['Digital Only', 'Canvas 8x10', 'Canvas 12x16', 'Canvas 18x24'
 
 const createUser = () => {
   const user = {};
-  user.userName = faker.name.firstName();
+  user.userName = faker.name.findName();
   user.userPhoto = faker.internet.avatar();
   return user;
 };
@@ -14,7 +14,7 @@ const createUser = () => {
 const createReviewForItem = () => {
   const reviewforItem = {};
   reviewforItem.userID = Math.ceil(Math.random() * (100));
-  reviewforItem.review = faker.lorem.sentence();
+  reviewforItem.review = faker.lorem.sentences();
   reviewforItem.reviewPicDog = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(40))}`;
   reviewforItem.reviewPicCat = `http://bit.ly/etsycats${Math.ceil(Math.random() * Math.ceil(40))}`;
   reviewforItem.reviewRating = Math.ceil(Math.random() * (5));
@@ -26,7 +26,7 @@ const createReviewForItem = () => {
 const createReviewForShop = () => {
   const reviewForShop = {};
   reviewForShop.userID = Math.floor(Math.random() * (100));
-  reviewForShop.review = faker.lorem.sentence();
+  reviewForShop.review = faker.lorem.sentences();
   reviewForShop.reviewPic = faker.image.nature();
   reviewForShop.reviewRating = Math.ceil(Math.random() * (5));
   reviewForShop.reviewDate = `${datesArr[Math.floor(Math.random() * Math.floor(datesArr.length))]}`;
@@ -46,7 +46,7 @@ const createUsers = () => {
 
 const createReviewsForItem = () => {
   const reviewsForItemArr = [];
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 0; i < 50; i += 1) {
     reviewsForItemArr.push(createReviewForItem());
   }
   return reviewsForItemArr;

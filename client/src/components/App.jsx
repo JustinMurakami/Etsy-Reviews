@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import ReviewsForItem from './ReviewsForItems.jsx';
+import ReviewsForShop from './ReviewsForShop.jsx';
+import { FaStar, FaCaretDown } from 'react-icons/fa';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -8,9 +10,11 @@ export default class App extends React.Component {
     this.state = {
       reviewsForItem: [],
       reviewsForShop: [],
+      tab: 'reviewsItem',
     };
     this.getAllReviewsForItem = this.getAllReviewsForItem.bind(this);
     this.getAllReviewsForShop = this.getAllReviewsForShop.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -42,15 +46,63 @@ export default class App extends React.Component {
       });
   }
 
+  handleClick(e) {
+    this.setState({
+      tab: e.target.value,
+    }, () => console.log(this.state));
+  }
+
   render() {
-    const { reviewsForItem, reviewsForShop } = this.state;
+    const { reviewsForItem, reviewsForShop, tab } = this.state;
+    if (tab === 'reviewsItem') {
+      return (
+        <div className="reviews">
+          <div className="reviews-total">
+            <h3 className="reviews-title">{reviewsForShop.length} reviews <FaStar/><FaStar/><FaStar/><FaStar/><FaStar/> </h3>
+          </div>
+          <div className="reviews-tab-item">
+            <div className="reviews-tab-list" id="reviews-tab-list-1">
+              <button type="button" className="reviews-tab-item" tabIndex="0" role="tab" value="reviewsItem">Reviews for this item <span id="reviews-ratings">{reviewsForItem.length}</span></button>
+              <button type="button" className="reviews-tab-item" tabIndex="0" role="tab" value="reviewsShop" onClick={this.handleClick}>Reviews for this shop <span id="reviews-ratings">{reviewsForShop.length}</span></button>
+            </div>
+            <div className="reviews-sort-list">
+              <button type="button" className="reviews-sort-list-button">Sort by: Recommended <FaCaretDown /></button>
+            </div>
+          </div>
+          <ReviewsForItem reviewsForItem={reviewsForItem} />
+        </div>
+      );
+    }
     return (
       <div className="reviews">
-        <div className="reviews reviewsTotal">
-          <h3 className="text-body">{reviewsForShop.length} reviews ★★★★★</h3>
+        <div className="reviews-total">
+          <h3 className="reviews-title">{reviewsForShop.length} reviews ★★★★★</h3>
         </div>
-        <ReviewsForItem reviewsForItem={reviewsForItem} />
+        <div className="reviews-tab-item">
+          <div className="reviews-tab-list" id="reviews-tab-list-1">
+            <button className="reviews-tab-item" tabIndex="0" role="tab" value="reviewsItem" onClick={this.handleClick} >Reviews for this item <span id="reviews-ratings">{reviewsForItem.length}</span></button>
+            <button className="reviews-tab-item" tabIndex="0" role="tab" value="reviewsShop">Reviews for this shop <span id="reviews-ratings">{reviewsForShop.length}</span></button>
+          </div>
+          <div className="reviews-sort-list">
+            <button type="button" className="reviews-sort-list-button">Sort by: Recommended </button>
+          </div>
+        </div>
+        <ReviewsForShop reviewsForShop={reviewsForShop} />
       </div>
     );
   }
 }
+
+//   if (tab === "reviewsItem") {
+//     return(
+//       <div>
+//         <ReviewsForItem reviewsForItem={reviewsForItem} />
+//       </div>
+//     )
+//   } else {
+//     return(
+//       <div>
+//         <ReviewsForShop reviewsForShop={reviewsForShop} />
+//       </div>
+//     )
+//   }
