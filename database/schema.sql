@@ -28,5 +28,6 @@ CREATE TABLE reviewsForShop(
     reviewRating int not null,
     reviewDate varchar(255) not null,
     purchasedItemDescription varchar(255) not null,
-    purchasedItemPic varchar(255) not null
+    purchasedItemPicDog varchar(255) not null,
+    purchasedItemPicCat varchar(255) not null
 );

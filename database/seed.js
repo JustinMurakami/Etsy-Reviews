@@ -15,9 +15,9 @@ const createReviewForItem = () => {
   const reviewforItem = {};
   reviewforItem.userID = Math.ceil(Math.random() * (100));
   reviewforItem.review = faker.lorem.sentences();
-  reviewforItem.reviewPicDog = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(40))}`;
+  reviewforItem.reviewPicDog = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(37))}`;
   reviewforItem.reviewPicCat = `http://bit.ly/etsycats${Math.ceil(Math.random() * Math.ceil(40))}`;
-  reviewforItem.reviewRating = Math.ceil(Math.random() * (5));
+  reviewforItem.reviewRating = Math.floor(Math.random() * (5 - 2 + 1) + 2);
   reviewforItem.reviewDate = `${datesArr[Math.floor(Math.random() * Math.floor(datesArr.length))]}`;
   reviewforItem.style = `${stylesArr[Math.floor(Math.random() * Math.floor(stylesArr.length))]}`;
   return reviewforItem;
@@ -28,17 +28,17 @@ const createReviewForShop = () => {
   reviewForShop.userID = Math.floor(Math.random() * (100));
   reviewForShop.review = faker.lorem.sentences();
   reviewForShop.reviewPic = faker.image.nature();
-  reviewForShop.reviewRating = Math.ceil(Math.random() * (5));
+  reviewForShop.reviewRating = Math.floor(Math.random() * (5 - 2 + 1) + 2);
   reviewForShop.reviewDate = `${datesArr[Math.floor(Math.random() * Math.floor(datesArr.length))]}`;
   reviewForShop.purchasedItemDescription = faker.lorem.sentence();
-  reviewForShop.purchasedItemPicDog = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(40))}`;
+  reviewForShop.purchasedItemPicDog = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(37))}`;
   reviewForShop.purchasedItemPicCat = `http://bit.ly/etsycats${Math.ceil(Math.random() * Math.ceil(40))}`;
   return reviewForShop;
 };
 
 const createUsers = () => {
   const usersArr = [];
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 0; i < 500; i += 1) {
     usersArr.push(createUser());
   }
   return usersArr;
@@ -46,7 +46,7 @@ const createUsers = () => {
 
 const createReviewsForItem = () => {
   const reviewsForItemArr = [];
-  for (let i = 0; i < 50; i += 1) {
+  for (let i = 0; i < 500; i += 1) {
     reviewsForItemArr.push(createReviewForItem());
   }
   return reviewsForItemArr;
@@ -54,7 +54,7 @@ const createReviewsForItem = () => {
 
 const createReviewsForShop = () => {
   const reviewsForShopArr = [];
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 0; i < 500; i += 1) {
     reviewsForShopArr.push(createReviewForShop());
   }
   return reviewsForShopArr;
@@ -83,7 +83,7 @@ function seedMe() {
     });
   });
   reviewsForShopArr.forEach((reviewShop) => {
-    db.query(`INSERT INTO reviewsForShop(userID, review, reviewPic, reviewRating, reviewDate, purchasedItemDescription, purchasedItemPic) VALUES ( ${reviewShop.userID}, "${reviewShop.review}", "${reviewShop.reviewPic}", "${reviewShop.reviewRating}", "${reviewShop.reviewDate}", "${reviewShop.purchasedItemDescription}", "${reviewShop.purchasedItemPic}")`, (err) => {
+    db.query(`INSERT INTO reviewsForShop(userID, review, reviewPic, reviewRating, reviewDate, purchasedItemDescription, purchasedItemPicDog, purchasedItemPicCat) VALUES ( ${reviewShop.userID}, "${reviewShop.review}", "${reviewShop.reviewPic}", "${reviewShop.reviewRating}", "${reviewShop.reviewDate}", "${reviewShop.purchasedItemDescription}", "${reviewShop.purchasedItemPicDog}", "${reviewShop.purchasedItemPicCat}")`, (err) => {
       if (err) {
         console.error(err);
       } else {

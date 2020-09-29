@@ -15,6 +15,7 @@ export default class App extends React.Component {
     this.getAllReviewsForItem = this.getAllReviewsForItem.bind(this);
     this.getAllReviewsForShop = this.getAllReviewsForShop.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.getRating = this.getRating.bind(this);
   }
 
   componentDidMount() {
@@ -46,6 +47,20 @@ export default class App extends React.Component {
       });
   }
 
+  getRating(rating) {
+    if (rating === 1) {
+      return <FaStar />
+    } else if (rating === 2) {
+      return <div><FaStar/><FaStar/></div>
+    } else if (rating === 3) {
+      return <div><FaStar/><FaStar/><FaStar/></div>
+    } else if (rating === 4) {
+      return <div><FaStar/><FaStar/><FaStar/><FaStar/></div>
+    } else {
+      return <div><FaStar/><FaStar/><FaStar/><FaStar/><FaStar/></div>
+    }
+  }
+
   handleClick(e) {
     this.setState({
       tab: e.target.value,
@@ -58,7 +73,7 @@ export default class App extends React.Component {
       return (
         <div className="reviews">
           <div className="reviews-total">
-            <h3 className="reviews-title">{reviewsForShop.length} reviews <FaStar/><FaStar/><FaStar/><FaStar/><FaStar/> </h3>
+            <h3 className="reviews-title">{reviewsForShop.length} reviews <a id="reviews-title-stars"><FaStar/><FaStar/><FaStar/><FaStar/><FaStar/> </a></h3>
           </div>
           <div className="reviews-tab-item">
             <div className="reviews-tab-list" id="reviews-tab-list-1">
@@ -69,14 +84,14 @@ export default class App extends React.Component {
               <button type="button" className="reviews-sort-list-button">Sort by: Recommended <FaCaretDown /></button>
             </div>
           </div>
-          <ReviewsForItem reviewsForItem={reviewsForItem} />
+          <ReviewsForItem reviewsForItem={reviewsForItem} getRating={this.getRating} />
         </div>
       );
     }
     return (
       <div className="reviews">
         <div className="reviews-total">
-          <h3 className="reviews-title">{reviewsForShop.length} reviews ★★★★★</h3>
+          <h3 className="reviews-title">{reviewsForShop.length} reviews <a id="reviews-title-stars"><FaStar/><FaStar/><FaStar/><FaStar/><FaStar/> </a></h3>
         </div>
         <div className="reviews-tab-item">
           <div className="reviews-tab-list" id="reviews-tab-list-1">
@@ -87,7 +102,7 @@ export default class App extends React.Component {
             <button type="button" className="reviews-sort-list-button">Sort by: Recommended </button>
           </div>
         </div>
-        <ReviewsForShop reviewsForShop={reviewsForShop} />
+        <ReviewsForShop reviewsForShop={reviewsForShop} getRating={this.getRating} />
       </div>
     );
   }
