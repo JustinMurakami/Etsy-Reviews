@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FaStar } from 'react-icons/fa';
 
-const ReviewsForShopStyling = styled.div`
+const ReviewsForShopContainer = styled.div`
   .ReviewsListForShop {
     padding: 9px;
     margin: 0px 0px 24px;
@@ -16,8 +16,8 @@ const ReviewsForShopStyling = styled.div`
     margin: 0px 12px 0px 0px;
     border-radius: 50%;
     overflow: hidden;
-    height: 10%;
-    width: 4%;
+    height: 36px;
+    width: 36px;
   }
   #review-username {
     font-size: 13px;
@@ -33,6 +33,10 @@ const ReviewsForShopStyling = styled.div`
     line-height: 18px;
     color: #595959;
   }
+  .review-rating-pic {
+    display:flex;
+    justify-content:flex-start;
+  }
   .review-rating-text {
     justify-self: space-around;
     flex-direction:row;
@@ -42,6 +46,13 @@ const ReviewsForShopStyling = styled.div`
   #review-stars {
     font-size: 14px;
     margin: 0px 0px 6px;
+  }
+  .review-review-pic {
+    display: flex;
+    justify-content: flex-end;
+    vertical-align: middle;
+    height: 128px;
+    width: 128px;
   }
   #review-shop-title {
     font-size: 13px;
@@ -73,19 +84,30 @@ const ReviewsForShop = (props) => {
     return <h2> Loading...</h2>;
   }
   return (
-    <ReviewsForShopStyling>
+    <ReviewsForShopContainer className="ReviewsForShopContainer">
       {reviewsForShop.map((review) => (
         <div className="ReviewsListForShop" key={review.id}>
-          <p className="reviews-usertitle">
+          <div className="reviews-usertitle">
             <img src={review.userPhoto} className="reviews-userphoto" alt="" />
             <span id="review-username">{review.userName}</span>
             <span id="review-date">{review.reviewDate}</span>
-          </p>
+          </div>
+          <div className="review-rating-pic">
+            <div className="review-rating-text">
+              <div id="review-stars">{getRating(review.reviewRating)}</div>
+              <p className="review-style">
+                Style:
+                <span id="review-style-type">
+                  {review.style}
+                </span>
+              </p>
+              <p id="review-review-text">
+                {review.review}
+              </p>
+            </div>
+            <img className="review-review-pic" src={review.reviewPic} alt="" />
+          </div>
           <div className="review-rating-text">
-            <div id="review-stars">{getRating(review.reviewRating)}</div>
-            <p>
-              {review.review}
-            </p>
             <p id="review-shop-title">Purchased Item: </p>
             <div className="review-shop-pic/description">
               <img id="review-shop-purchasedPic" src={review.purchasedItemPicDog} alt="" />
@@ -96,7 +118,7 @@ const ReviewsForShop = (props) => {
           </div>
         </div>
       ))}
-    </ReviewsForShopStyling>
+    </ReviewsForShopContainer>
   );
 };
 export default ReviewsForShop;

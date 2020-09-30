@@ -9,13 +9,13 @@ import ReviewsPhotoCarousel from './ReviewsPhotoCarousel.jsx';
 import Pagination from './Pagination.jsx';
 
 const ReviewsContainer = styled.div`
-    text-align: left;
     font-family: "Graphik Webfont", -apple-system, system-ui, Roboto, "Helvetica", "Arial", "sans-serif";
     display:flex;
     justify-content: flex-start;
-    align-items:flex-start;
-    flex-direction:column;
+    align-items: flex-start;
+    flex-direction: column;
     padding: 0px 0px 0px 30px;
+    box-sizing: border-box;
   `;
 
 export default class App extends React.Component {
@@ -98,7 +98,7 @@ export default class App extends React.Component {
 
     if (tab === 'reviewsItem') {
       return (
-        <ReviewsContainer>
+        <ReviewsContainer className="ReviewsContainer">
           <ReviewsHeader
             reviewsForShop={reviewsForShop}
             reviewsForItem={reviewsForItem}
@@ -119,7 +119,7 @@ export default class App extends React.Component {
       );
     }
     return (
-      <ReviewsContainer>
+      <ReviewsContainer className="ReviewsContainer">
         <ReviewsHeader
           reviewsForShop={reviewsForShop}
           reviewsForItem={reviewsForItem}

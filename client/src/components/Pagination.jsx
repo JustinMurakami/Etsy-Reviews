@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const PaginationStyling = styled.nav`
+const PaginationContainer = styled.nav`
   .reviews-pagination {
     display:inline-flex;
     justify-content: flex-start;
     list-style: none;
   }
-  .reviews-page-item  a {
+  .reviews-page-item  button {
     list-style: none;
     font-size: 13px;
     line-height: 18.2px;
@@ -27,17 +27,17 @@ const Pagination = (props) => {
   }
 
   return (
-    <PaginationStyling>
+    <PaginationContainer className="PaginationContainer">
       <ul className="reviews-pagination">
-        {pageNumbers.map(number => (
+        {pageNumbers.map((number) => (
           <li key={number} className="reviews-page-item">
-            <a href="#" onClick={() => paginate(number)} className="page-link">
+            <button type="button" href="#" onClick={() => paginate(number)} className="page-link">
               {number}
-            </a>
+            </button>
           </li>
         ))}
       </ul>
-    </PaginationStyling>
+    </PaginationContainer>
   );
 };
 

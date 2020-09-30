@@ -27,7 +27,7 @@ const createReviewForShop = () => {
   const reviewForShop = {};
   reviewForShop.userID = Math.floor(Math.random() * (100));
   reviewForShop.review = faker.lorem.sentences();
-  reviewForShop.reviewPic = faker.image.nature();
+  reviewForShop.reviewPic = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(37))}`;
   reviewForShop.reviewRating = Math.floor(Math.random() * (5 - 2 + 1) + 2);
   reviewForShop.reviewDate = `${datesArr[Math.floor(Math.random() * Math.floor(datesArr.length))]}`;
   reviewForShop.purchasedItemDescription = faker.lorem.sentence();

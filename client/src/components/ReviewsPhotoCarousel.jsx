@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FaAngleRight, FaAngleLeft } from 'react-icons/fa';
 
-const ReviewsPhotoCarouselStyling = styled.div`
+const ReviewsPhotoCarouselContainer = styled.div`
   .reviews-carousel {
     flex-flow: row;
     position: relative;
@@ -99,7 +99,7 @@ class ReviewsPhotoCarousel extends React.Component {
       }
     };
     return (
-      <ReviewsPhotoCarouselStyling>
+      <ReviewsPhotoCarouselContainer className="ReviewsPhotoCarouselContainer">
         <div className="reviews-carousel-title">Photos from reviews</div>
         <div className="reviews-carousel">
           {photosUsed.map((item, index) => {
@@ -117,7 +117,7 @@ class ReviewsPhotoCarousel extends React.Component {
           </button>
         </div>
 
-      </ReviewsPhotoCarouselStyling>
+      </ReviewsPhotoCarouselContainer>
     );
   }
 };
