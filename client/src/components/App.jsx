@@ -1,10 +1,22 @@
 import React from 'react';
 import axios from 'axios';
+import { FaStar } from 'react-icons/fa';
+import styled from 'styled-components';
 import ReviewsHeader from './ReviewsHeader.jsx';
 import ReviewsForItem from './ReviewsForItems.jsx';
 import ReviewsForShop from './ReviewsForShop.jsx';
+import ReviewsPhotoCarousel from './ReviewsPhotoCarousel.jsx';
 import Pagination from './Pagination.jsx';
-import { FaStar, FaCaretDown } from 'react-icons/fa';
+
+const ReviewsContainer = styled.div`
+    text-align: left;
+    font-family: "Graphik Webfont", -apple-system, system-ui, Roboto, "Helvetica", "Arial", "sans-serif";
+    display:flex;
+    justify-content: flex-start;
+    align-items:flex-start;
+    flex-direction:column;
+    padding: 0px 0px 0px 30px;
+  `;
 
 export default class App extends React.Component {
   constructor(props) {
@@ -20,7 +32,6 @@ export default class App extends React.Component {
     this.getAllReviewsForItem = this.getAllReviewsForItem.bind(this);
     this.getAllReviewsForShop = this.getAllReviewsForShop.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.getRating = this.getRating.bind(this);
   }
 
   componentDidMount() {
@@ -33,7 +44,7 @@ export default class App extends React.Component {
       .then((results) => {
         this.setState({
           reviewsForItem: results.data,
-        }, () => console.log(this.state));
+        });
       })
       .catch((err) => {
         console.error(err);
@@ -69,11 +80,13 @@ export default class App extends React.Component {
   handleClick(e) {
     this.setState({
       tab: e.target.value,
-    }, () => console.log(this.state));
+    });
   }
 
   render() {
-    const { reviewsForItem, reviewsForShop, tab, loading, currentPage, reviewsPerPage } = this.state;
+    const {
+      reviewsForItem, reviewsForShop, tab, loading, currentPage, reviewsPerPage,
+    } = this.state;
     const indexOfLastReview = currentPage * reviewsPerPage;
     const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
     const currentReviewsForItem = reviewsForItem.slice(indexOfFirstReview, indexOfLastReview);
@@ -85,7 +98,7 @@ export default class App extends React.Component {
 
     if (tab === 'reviewsItem') {
       return (
-        <div className="reviews-container">
+        <ReviewsContainer>
           <ReviewsHeader
             reviewsForShop={reviewsForShop}
             reviewsForItem={reviewsForItem}
@@ -101,11 +114,12 @@ export default class App extends React.Component {
             totalReviews={reviewsForItem.length}
             paginate={paginate}
           />
-        </div>
+          <ReviewsPhotoCarousel reviewsForShop={reviewsForShop} />
+        </ReviewsContainer>
       );
     }
     return (
-      <div className="reviews-container">
+      <ReviewsContainer>
         <ReviewsHeader
           reviewsForShop={reviewsForShop}
           reviewsForItem={reviewsForItem}
@@ -121,21 +135,8 @@ export default class App extends React.Component {
           totalReviews={reviewsForShop.length}
           paginate={paginate}
         />
-      </div>
+        <ReviewsPhotoCarousel reviewsForShop={reviewsForShop} />
+      </ReviewsContainer>
     );
   }
 }
-
-//   if (tab === "reviewsItem") {
-//     return(
-//       <div>
-//         <ReviewsForItem reviewsForItem={reviewsForItem} />
-//       </div>
-//     )
-//   } else {
-//     return(
-//       <div>
-//         <ReviewsForShop reviewsForShop={reviewsForShop} />
-//       </div>
-//     )
-//   }

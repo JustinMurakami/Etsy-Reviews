@@ -1,4 +1,23 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const PaginationStyling = styled.nav`
+  .reviews-pagination {
+    display:inline-flex;
+    justify-content: flex-start;
+    list-style: none;
+  }
+  .reviews-page-item  a {
+    list-style: none;
+    font-size: 13px;
+    line-height: 18.2px;
+    text-align: center;
+    color: #222222;
+    padding: 10px 15px;
+    margin-right:4px;
+    border-radius: 50%;
+  }
+`;
 
 const Pagination = (props) => {
   const { reviewsPerPage, totalReviews, paginate } = props;
@@ -8,7 +27,7 @@ const Pagination = (props) => {
   }
 
   return (
-    <nav>
+    <PaginationStyling>
       <ul className="reviews-pagination">
         {pageNumbers.map(number => (
           <li key={number} className="reviews-page-item">
@@ -18,7 +37,7 @@ const Pagination = (props) => {
           </li>
         ))}
       </ul>
-    </nav>
+    </PaginationStyling>
   );
 };
 

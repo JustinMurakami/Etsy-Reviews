@@ -13,6 +13,7 @@
   "devDependencies": {
     "babel-core": "^6.23.1",
     "babel-loader": "^6.3.2",
+    "babel-plugin-styled-components": "^1.11.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.23.0",
     "eslint": "^7.9.0",
@@ -33,9 +34,10 @@
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
     "mysql2": "^1.7.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "react-icons": "^3.11.0",
-    "sequelize": "^5.19.1"
+    "sequelize": "^5.19.1",
+    "styled-components": "^5.2.0"
   }
 }
