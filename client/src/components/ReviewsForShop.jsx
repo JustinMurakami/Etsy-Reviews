@@ -53,11 +53,10 @@ const ReviewsForShopContainer = styled.div`
     margin: 0px 0px;
   }
   .review-review-pic {
-    display: flex;
     justify-content: flex-end;
     vertical-align: middle;
-    height: 128px;
-    width: 128px;
+    height: 14vw;
+    width: 14vw;
     border-radius: 10%;
   }
   #review-shop-title {

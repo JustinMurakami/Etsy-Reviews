@@ -65,8 +65,8 @@ const ReviewsForItemsContainer = styled.div`
   .review-review-pic {
     justify-content: flex-end;
     vertical-align: middle;
-    height: 128px;
-    width: 128px;
+    height: 14vw;
+    width: 14vw;
     border-radius: 10%;
   }
 `;

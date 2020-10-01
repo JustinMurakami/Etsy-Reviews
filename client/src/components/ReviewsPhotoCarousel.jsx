@@ -13,7 +13,7 @@ const ReviewsPhotoCarouselContainer = styled.div`
     display:flex;
     align-content: center;
     overflow:hidden;
-    width: 52vw;
+    width: 70vw;
   }
   .reviews-carousel-title {
     margin: 0px 0px 12px;
@@ -24,8 +24,8 @@ const ReviewsPhotoCarouselContainer = styled.div`
     transition: .5s;
   }
   .reviews-carousel-image {
-    width:12vw;
-    height:12vw;
+    width:16vw;
+    height:16vw;
     cursor:pointer;
     border-radius:10%;
   }
@@ -79,7 +79,7 @@ class ReviewsPhotoCarousel extends React.Component {
     const goLeft = () => {
       if (x === 0) {
         this.setState({
-          x: -100 * (photosArr.length - 1),
+          x: -400 * (photosArr.length - 1),
         });
       } else {
         this.setState({
@@ -88,7 +88,7 @@ class ReviewsPhotoCarousel extends React.Component {
       }
     };
     const goRight = () => {
-      if (x === -100 * (photosArr.length - 1)) {
+      if (x === -400 * (photosArr.length - 1)) {
         this.setState({
           x: 0,
         });

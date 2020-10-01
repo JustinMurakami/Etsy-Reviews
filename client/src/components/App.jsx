@@ -12,7 +12,7 @@ const ReviewsContainer = styled.div`
     font-family: "Graphik Webfont", -apple-system, system-ui, Roboto, "Helvetica", "Arial", "sans-serif";
     display:flex;
     flex-direction: column;
-    padding: 0px 0px 0px 30px;
+    padding: 0px 300px 0px 30px;
     
   `;
 
@@ -63,16 +63,17 @@ export default class App extends React.Component {
 
   getRating(rating) {
     if (rating === 1) {
-      return <FaStar />
+      console.log(this.state);
+      return <FaStar />;
     }
     if (rating === 2) {
-      return <div><FaStar/> <FaStar/></div>
+      return <div><FaStar/> <FaStar/></div>;
     } if (rating === 3) {
-      return <div><FaStar/> <FaStar/> <FaStar/></div>
+      return <div><FaStar/> <FaStar/> <FaStar/></div>;
     } if (rating === 4) {
-      return <div><FaStar/> <FaStar/> <FaStar/> <FaStar/></div>
-    } 
-      return <div><FaStar/> <FaStar/> <FaStar/> <FaStar/> <FaStar/></div>
+      return <div><FaStar/> <FaStar/> <FaStar/> <FaStar/></div>;
+    }
+    return <div><FaStar/> <FaStar/> <FaStar/> <FaStar/> <FaStar/></div>;
   }
 
   handleClick(e) {
