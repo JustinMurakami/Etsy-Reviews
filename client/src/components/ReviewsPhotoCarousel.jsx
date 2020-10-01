@@ -3,57 +3,59 @@ import styled from 'styled-components';
 import { FaAngleRight, FaAngleLeft } from 'react-icons/fa';
 
 const ReviewsPhotoCarouselContainer = styled.div`
+  padding: 9px;
   .reviews-carousel {
     flex-flow: row;
     position: relative;
-    width: 100%;
-    height: 100vh;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     display:flex;
     align-content: center;
     overflow:hidden;
+    width: 52vw;
   }
   .reviews-carousel-title {
     margin: 0px 0px 12px;
   }
 
   .reviews-carousel-item {
-    width: 154px;
-    height: 154px;
     padding: 9px;
     transition: .5s;
-    overflow: hidden;
   }
   .reviews-carousel-image {
-    height:100%;
-    width:auto;
+    width:12vw;
+    height:12vw;
     cursor:pointer;
+    border-radius:10%;
   }
 
   #reviews-carousel-btn-left {
+    font-size: 24px;
+    font-color:#222222;
     position: absolute;
     left: 0;
-    top: 7%;
+    top: 50%;
     transform: translateY(-50%);
     background-color: white;
-    border-radius:50%;
+    border:none;
+    border-radius: 50%;
     outline: none;
     cursor:pointer;
-    font-size: 2vw;
-
   }
   #reviews-carousel-btn-right {
+    font-size: 24px;
+    font-color:#222222;
+    font-weight:100px;
     position: absolute;
     right: 0;
-    top: 7%;
+    top: 50%;
     transform: translateY(-50%);
     background-color: white;
+    border:none;
     border-radius:50%;
     outline: none;
     cursor:pointer;
-    font-size: 2vw;
   }
 `;
 
@@ -66,53 +68,56 @@ class ReviewsPhotoCarousel extends React.Component {
   }
 
   render() {
-    const { reviewsForShop } = this.props;
+    const { reviewsForItem } = this.props;
     const { x } = this.state;
+
     const photosArr = [];
-    reviewsForShop.map((review) => (
-      photosArr.push(review.purchasedItemPicDog)
+    reviewsForItem.map((review) => (
+      photosArr.push(review.reviewPicDog)
     ));
-    reviewsForShop.map((review) => (
-      photosArr.push(review.purchasedItemPicCat)
-    ));
-    const photosUsed = photosArr.slice(0, 25);
+
     const goLeft = () => {
       if (x === 0) {
         this.setState({
-          x: -100 * (photosUsed.length - 1),
+          x: -100 * (photosArr.length - 1),
         });
       } else {
         this.setState({
-          x: x + 100,
+          x: x + 400,
         });
       }
     };
     const goRight = () => {
-      if (x === -100 * (photosUsed.length - 1)) {
+      if (x === -100 * (photosArr.length - 1)) {
         this.setState({
           x: 0,
         });
       } else {
         this.setState({
-          x: x - 100,
+          x: x - 400,
         });
       }
     };
+
     return (
       <ReviewsPhotoCarouselContainer className="ReviewsPhotoCarouselContainer">
         <div className="reviews-carousel-title">Photos from reviews</div>
         <div className="reviews-carousel">
-          {photosUsed.map((item, index) => {
-            return (
-              <div className="reviews-carousel-item" key={index} style={{ transform: `translateX(${this.state.x}%)` }}>
-                <img className="reviews-carousel-image" src={item} alt="" />
-              </div>
-            )
-          })}
+          {photosArr.map((item, index) => (
+            <div className="reviews-carousel-item" key={index} style={{ transform: `translateX(${this.state.x}%)` }}>
+              <img className="reviews-carousel-image" src={item} alt="" />
+            </div>
+          ))}
           <button type="button" id="reviews-carousel-btn-left" onClick={goLeft}>
             <FaAngleLeft />
           </button>
-          <button type="button" id="reviews-carousel-btn-right" onClick={goRight}>
+          <button
+            type="button"
+            id="reviews-carousel-btn-right"
+            onClick={() => {
+              goRight();
+            }}
+          >
             <FaAngleRight />
           </button>
         </div>

@@ -44,8 +44,13 @@ const ReviewsForShopContainer = styled.div`
     padding: 0px 0px 0px 48px;
   }
   #review-stars {
-    font-size: 14px;
+    font-size: 18px;
     margin: 0px 0px 6px;
+  }
+  #review-review-text {
+    font-size: 16px;
+    padding: 0px 30px 0px 0px;
+    margin: 0px 0px;
   }
   .review-review-pic {
     display: flex;
@@ -53,6 +58,7 @@ const ReviewsForShopContainer = styled.div`
     vertical-align: middle;
     height: 128px;
     width: 128px;
+    border-radius: 10%;
   }
   #review-shop-title {
     font-size: 13px;
@@ -65,6 +71,7 @@ const ReviewsForShopContainer = styled.div`
     vertical-align: middle;
     height:10%;
     width:4%;
+    border-radius: 10%;
   }
   #review-shop-description {
     display:inline-flex;
@@ -95,12 +102,6 @@ const ReviewsForShop = (props) => {
           <div className="review-rating-pic">
             <div className="review-rating-text">
               <div id="review-stars">{getRating(review.reviewRating)}</div>
-              <p className="review-style">
-                Style:
-                <span id="review-style-type">
-                  {review.style}
-                </span>
-              </p>
               <p id="review-review-text">
                 {review.review}
               </p>
@@ -110,10 +111,7 @@ const ReviewsForShop = (props) => {
           <div className="review-rating-text">
             <p id="review-shop-title">Purchased Item: </p>
             <div className="review-shop-pic/description">
-              <img id="review-shop-purchasedPic" src={review.purchasedItemPicDog} alt="" />
-              <span id="review-shop-description">
-                {review.purchasedItemDescription}
-              </span>
+              <img id="review-shop-purchasedPic" src={review.purchasedItemPicDog} alt="" /> <span id="review-shop-description"> {review.purchasedItemDescription} </span>
             </div>
           </div>
         </div>

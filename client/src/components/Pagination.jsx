@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const PaginationContainer = styled.nav`
+  margin: 20px 0px 36px;
+  align-items: center;
   .reviews-pagination {
     display:inline-flex;
     justify-content: flex-start;

@@ -5,24 +5,16 @@ import { FaStar, FaCaretDown } from 'react-icons/fa';
 const ReviewsHeaderContainer = styled.div`
   .reviews-total {
     font-family: "Guardian-EgypTT", serif;
-    font-weight: 10;
     letter-spacing: 0.35px;
-    font-size: 20px;
-    line-height: 32px;
-  }
-  .reviews-title {
     font-size: 26px;
     font-weight: 300;
-    line-height: 42px;
     color: #222222;
-    margin: 0px 0px;
   }
   #reviews-title-stars {
-    font-size: 20px;
+    font-size:20px;
+    font-weight:300;
   }
   .reviews-tab-list {
-    display: flex;
-    justify-content:flex-start;
     border-bottom: 2px solid rgba(34, 34, 34, 0.15);
   }
   .reviews-tab-item {
@@ -44,7 +36,8 @@ const ReviewsHeaderContainer = styled.div`
   }
   .reviews-sort-list {
     dislay:flex;
-    justify-content: flex-end;
+    justify-content:flex-end;
+    flex-direction:row-reverse;
     font-size: 13px;
     line-height: 18.2px;
     margin: 0px 12px 0px 0px;
@@ -54,8 +47,8 @@ const ReviewsHeaderContainer = styled.div`
     padding: 0px 0px;
     background: white;
     font-weight: bold;
-    border: none;
     cursor: pointer;
+    border:none;
   }
 `;
 
@@ -63,17 +56,17 @@ const ReviewsHeader = (props) => {
   const { reviewsForItem, reviewsForShop, handleClick } = props;
   return (
     <ReviewsHeaderContainer className="ReviewsHeaderContainer">
-      <div className="reviews-total">
-        <h3 className="reviews-title">{reviewsForShop.length} reviews <a id="reviews-title-stars"><FaStar /><FaStar /><FaStar /><FaStar /><FaStar /> </a></h3>
-      </div>
+      <h3 className="reviews-total">
+        {reviewsForShop.length} reviews<span id="reviews-title-stars"> <FaStar/> <FaStar/> <FaStar/> <FaStar/> <FaStar/></span>
+      </h3>
       <div className="reviews-tab-items">
         <div className="reviews-tab-list" id="reviews-tab-list">
           <button type="button" className="reviews-tab-item" tabIndex="0" role="tab" value="reviewsItem" onClick={handleClick} >Reviews for this item <span id="reviews-ratings">{reviewsForItem.length}</span></button>
           <button type="button" className="reviews-tab-item" tabIndex="0" role="tab" value="reviewsShop" onClick={handleClick}>Reviews for this shop <span id="reviews-ratings">{reviewsForShop.length}</span></button>
         </div>
-        <div className="reviews-sort-list">
-          <button type="button" className="reviews-sort-list-button">Sort by: Recommended <FaCaretDown/> </button>
-        </div>
+      </div>
+      <div className="reviews-sort-list">
+        <button type="button" className="reviews-sort-list-button">Sort by: Recommended <FaCaretDown/> </button>
       </div>
     </ReviewsHeaderContainer>
   );

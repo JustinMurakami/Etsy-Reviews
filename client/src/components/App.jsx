@@ -11,11 +11,9 @@ import Pagination from './Pagination.jsx';
 const ReviewsContainer = styled.div`
     font-family: "Graphik Webfont", -apple-system, system-ui, Roboto, "Helvetica", "Arial", "sans-serif";
     display:flex;
-    justify-content: flex-start;
-    align-items: flex-start;
     flex-direction: column;
     padding: 0px 0px 0px 30px;
-    box-sizing: border-box;
+    
   `;
 
 export default class App extends React.Component {
@@ -68,13 +66,13 @@ export default class App extends React.Component {
       return <FaStar />
     }
     if (rating === 2) {
-      return <div><FaStar/><FaStar/></div>
+      return <div><FaStar/> <FaStar/></div>
     } if (rating === 3) {
-      return <div><FaStar/><FaStar/><FaStar/></div>
+      return <div><FaStar/> <FaStar/> <FaStar/></div>
     } if (rating === 4) {
-      return <div><FaStar/><FaStar/><FaStar/><FaStar/></div>
+      return <div><FaStar/> <FaStar/> <FaStar/> <FaStar/></div>
     } 
-      return <div><FaStar/><FaStar/><FaStar/><FaStar/><FaStar/></div>
+      return <div><FaStar/> <FaStar/> <FaStar/> <FaStar/> <FaStar/></div>
   }
 
   handleClick(e) {
@@ -85,13 +83,13 @@ export default class App extends React.Component {
 
   render() {
     const {
-      reviewsForItem, reviewsForShop, tab, loading, currentPage, reviewsPerPage,
+      reviewsForItem, reviewsForShop, tab, loading, currentPage,
+      reviewsPerPage,
     } = this.state;
     const indexOfLastReview = currentPage * reviewsPerPage;
     const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
     const currentReviewsForItem = reviewsForItem.slice(indexOfFirstReview, indexOfLastReview);
     const currentReviewsForShop = reviewsForShop.slice(indexOfFirstReview, indexOfLastReview);
-
     const paginate = (pageNumber) => this.setState({
       currentPage: pageNumber,
     });
@@ -114,7 +112,9 @@ export default class App extends React.Component {
             totalReviews={reviewsForItem.length}
             paginate={paginate}
           />
-          <ReviewsPhotoCarousel reviewsForShop={reviewsForShop} />
+          <ReviewsPhotoCarousel
+            reviewsForItem={reviewsForItem}
+          />
         </ReviewsContainer>
       );
     }
@@ -135,7 +135,9 @@ export default class App extends React.Component {
           totalReviews={reviewsForShop.length}
           paginate={paginate}
         />
-        <ReviewsPhotoCarousel reviewsForShop={reviewsForShop} />
+        <ReviewsPhotoCarousel
+          reviewsForItem={reviewsForItem}
+        />
       </ReviewsContainer>
     );
   }

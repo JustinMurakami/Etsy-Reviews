@@ -38,7 +38,7 @@ const createReviewForShop = () => {
 
 const createUsers = () => {
   const usersArr = [];
-  for (let i = 0; i < 500; i += 1) {
+  for (let i = 0; i < 100; i += 1) {
     usersArr.push(createUser());
   }
   return usersArr;
@@ -46,7 +46,7 @@ const createUsers = () => {
 
 const createReviewsForItem = () => {
   const reviewsForItemArr = [];
-  for (let i = 0; i < 500; i += 1) {
+  for (let i = 0; i < 35; i += 1) {
     reviewsForItemArr.push(createReviewForItem());
   }
   return reviewsForItemArr;
@@ -54,7 +54,7 @@ const createReviewsForItem = () => {
 
 const createReviewsForShop = () => {
   const reviewsForShopArr = [];
-  for (let i = 0; i < 500; i += 1) {
+  for (let i = 0; i < 65; i += 1) {
     reviewsForShopArr.push(createReviewForShop());
   }
   return reviewsForShopArr;

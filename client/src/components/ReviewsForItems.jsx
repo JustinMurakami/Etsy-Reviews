@@ -43,7 +43,7 @@ const ReviewsForItemsContainer = styled.div`
     padding: 0px 0px 0px 48px;
   }
   #review-stars {
-    font-size: 14px;
+    font-size: 18px;
     margin: 0px 0px 6px;
   }
   .review-style {
@@ -57,16 +57,17 @@ const ReviewsForItemsContainer = styled.div`
     font-weight:300;
   }
   #review-review-text {
+    justify-content: flex-start;
     font-size: 16px;
     padding: 0px 30px 0px 0px;
     margin: 0px 0px;
   }
   .review-review-pic {
-    display: flex;
     justify-content: flex-end;
     vertical-align: middle;
     height: 128px;
     width: 128px;
+    border-radius: 10%;
   }
 `;
 
@@ -89,10 +90,7 @@ const ReviewsforItem = (props) => {
             <div className="review-rating-text">
               <div id="review-stars">{getRating(review.reviewRating)}</div>
               <p className="review-style">
-                Style:
-                <span id="review-style-type">
-                  {review.style}
-                </span>
+                Style: <span id="review-style-type">{review.style}</span>
               </p>
               <p id="review-review-text">
                 {review.review}
