@@ -21,6 +21,16 @@ const dbHelpers = {
       }
     });
   },
+  // getOneReviewForItem: (id, callback) => {
+  //   const queryString = `Select * from users, reviewsForItem where users.id=${id} and reviewsForItem.userID =${id};`;
+  //   db.query(queryString, (err, result) => {
+  //     if (err) {
+  //       callback(err);
+  //     } else {
+  //       callback(null, result);
+  //     }
+  //   });
+  // },
 };
 
 module.exports = dbHelpers;

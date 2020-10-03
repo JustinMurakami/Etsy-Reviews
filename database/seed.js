@@ -14,7 +14,7 @@ const createUser = () => {
 const createReviewForItem = () => {
   const reviewforItem = {};
   reviewforItem.userID = Math.ceil(Math.random() * (100));
-  reviewforItem.review = faker.lorem.sentences();
+  reviewforItem.review = faker.lorem.sentences() + faker.lorem.sentences();
   reviewforItem.reviewPicDog = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(37))}`;
   reviewforItem.reviewPicCat = `http://bit.ly/etsycats${Math.ceil(Math.random() * Math.ceil(40))}`;
   reviewforItem.reviewRating = Math.floor(Math.random() * (5 - 2 + 1) + 2);
@@ -26,8 +26,8 @@ const createReviewForItem = () => {
 const createReviewForShop = () => {
   const reviewForShop = {};
   reviewForShop.userID = Math.floor(Math.random() * (100));
-  reviewForShop.review = faker.lorem.sentences();
-  reviewForShop.reviewPic = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(37))}`;
+  reviewForShop.review = faker.lorem.sentences() + faker.lorem.sentences();
+  reviewForShop.reviewPicDog = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(37))}`;
   reviewForShop.reviewRating = Math.floor(Math.random() * (5 - 2 + 1) + 2);
   reviewForShop.reviewDate = `${datesArr[Math.floor(Math.random() * Math.floor(datesArr.length))]}`;
   reviewForShop.purchasedItemDescription = faker.lorem.sentence();
@@ -46,7 +46,7 @@ const createUsers = () => {
 
 const createReviewsForItem = () => {
   const reviewsForItemArr = [];
-  for (let i = 0; i < 36; i += 1) {
+  for (let i = 0; i < 40; i += 1) {
     reviewsForItemArr.push(createReviewForItem());
   }
   return reviewsForItemArr;
@@ -54,7 +54,7 @@ const createReviewsForItem = () => {
 
 const createReviewsForShop = () => {
   const reviewsForShopArr = [];
-  for (let i = 0; i < 64; i += 1) {
+  for (let i = 0; i < 80; i += 1) {
     reviewsForShopArr.push(createReviewForShop());
   }
   return reviewsForShopArr;
@@ -83,7 +83,7 @@ function seedMe() {
     });
   });
   reviewsForShopArr.forEach((reviewShop) => {
-    db.query(`INSERT INTO reviewsForShop(userID, review, reviewPic, reviewRating, reviewDate, purchasedItemDescription, purchasedItemPicDog, purchasedItemPicCat) VALUES ( ${reviewShop.userID}, "${reviewShop.review}", "${reviewShop.reviewPic}", "${reviewShop.reviewRating}", "${reviewShop.reviewDate}", "${reviewShop.purchasedItemDescription}", "${reviewShop.purchasedItemPicDog}", "${reviewShop.purchasedItemPicCat}")`, (err) => {
+    db.query(`INSERT INTO reviewsForShop(userID, review, reviewPicDog, reviewRating, reviewDate, purchasedItemDescription, purchasedItemPicDog, purchasedItemPicCat) VALUES ( ${reviewShop.userID}, "${reviewShop.review}", "${reviewShop.reviewPicDog}", "${reviewShop.reviewRating}", "${reviewShop.reviewDate}", "${reviewShop.purchasedItemDescription}", "${reviewShop.purchasedItemPicDog}", "${reviewShop.purchasedItemPicCat}")`, (err) => {
       if (err) {
         console.error(err);
       } else {

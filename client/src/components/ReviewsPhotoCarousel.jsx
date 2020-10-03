@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaAngleRight, FaAngleLeft } from 'react-icons/fa';
+import ReviewsModal from './ReviewsModal.jsx'
 
 const ReviewsPhotoCarouselContainer = styled.div`
   padding: 9px;
@@ -23,7 +24,7 @@ const ReviewsPhotoCarouselContainer = styled.div`
     padding: 9px;
     transition: .5s;
   }
-  .reviews-carousel-image {
+  .reviews-carousel-pic {
     width:16vw;
     height:16vw;
     cursor:pointer;
@@ -68,18 +69,13 @@ class ReviewsPhotoCarousel extends React.Component {
   }
 
   render() {
-    const { reviewsForItem } = this.props;
+    const { reviewsForItem, handleModalClick, handleClickIdItem } = this.props;
     const { x } = this.state;
-
-    const photosArr = [];
-    reviewsForItem.map((review) => (
-      photosArr.push(review.reviewPicDog)
-    ));
 
     const goLeft = () => {
       if (x === 0) {
         this.setState({
-          x: -400 * (photosArr.length - 1),
+          x: 0,
         });
       } else {
         this.setState({
@@ -88,9 +84,9 @@ class ReviewsPhotoCarousel extends React.Component {
       }
     };
     const goRight = () => {
-      if (x === -400 * (photosArr.length - 1)) {
+      if (x === -3600) {
         this.setState({
-          x: 0,
+          x: -3600,
         });
       } else {
         this.setState({
@@ -103,9 +99,12 @@ class ReviewsPhotoCarousel extends React.Component {
       <ReviewsPhotoCarouselContainer className="ReviewsPhotoCarouselContainer">
         <div className="reviews-carousel-title">Photos from reviews</div>
         <div className="reviews-carousel">
-          {photosArr.map((item, index) => (
-            <div className="reviews-carousel-item" key={index} style={{ transform: `translateX(${this.state.x}%)` }}>
-              <img className="reviews-carousel-image" src={item} alt="" />
+          {reviewsForItem.map((review) => (
+            <div className="reviews-carousel-item" key={review.id} style={{ transform: `translateX(${this.state.x}%)` }}>
+              <a className="reviews-carousel-pic"  onClick={() => {handleModalClick(); handleClickIdItem(review.id);}} >
+                <img className="reviews-carousel-pic" src={review.reviewPicDog} alt="" />
+                <ReviewsModal />
+              </a>
             </div>
           ))}
           <button type="button" id="reviews-carousel-btn-left" onClick={goLeft}>

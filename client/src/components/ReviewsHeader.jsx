@@ -17,7 +17,7 @@ const ReviewsHeaderContainer = styled.div`
   .reviews-tab-list {
     border-bottom: 2px solid rgba(34, 34, 34, 0.15);
   }
-  .reviews-tab-item {
+  .reviewsTabItem {
     font-size: 16px;
     line-height: 22.4px;
     margin: 0px 12px 0px 0px;
@@ -44,11 +44,14 @@ const ReviewsHeaderContainer = styled.div`
     padding: 12px 0px;
   }
   .reviews-sort-list-button {
-    padding: 0px 0px;
     background: white;
     font-weight: bold;
-    cursor: pointer;
+    border-radius: 10%;
     border:none;
+  }
+  .reviews-sort-list-button:hover {
+    cursor: pointer;
+    background: #2222;
   }
 `;
 
@@ -61,8 +64,8 @@ const ReviewsHeader = (props) => {
       </h3>
       <div className="reviews-tab-items">
         <div className="reviews-tab-list" id="reviews-tab-list">
-          <button type="button" className="reviews-tab-item" tabIndex="0" role="tab" value="reviewsItem" onClick={handleClick} >Reviews for this item <span id="reviews-ratings">{reviewsForItem.length}</span></button>
-          <button type="button" className="reviews-tab-item" tabIndex="0" role="tab" value="reviewsShop" onClick={handleClick}>Reviews for this shop <span id="reviews-ratings">{reviewsForShop.length}</span></button>
+          <button type="button" className="reviewsTabItem" tabIndex="0" role="tab" value="reviewsItem" onClick={handleClick} >Reviews for this item <span id="reviews-ratings">{reviewsForItem.length}</span></button>
+          <button type="button" className="reviewsTabItem" tabIndex="0" role="tab" value="reviewsShop" onClick={handleClick}>Reviews for this shop <span id="reviews-ratings">{reviewsForShop.length}</span></button>
         </div>
       </div>
       <div className="reviews-sort-list">

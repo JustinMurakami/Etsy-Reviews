@@ -6,13 +6,14 @@ import ReviewsHeader from './ReviewsHeader.jsx';
 import ReviewsForItem from './ReviewsForItems.jsx';
 import ReviewsForShop from './ReviewsForShop.jsx';
 import ReviewsPhotoCarousel from './ReviewsPhotoCarousel.jsx';
+import ReviewsModal from './ReviewsModal.jsx'
 import Pagination from './Pagination.jsx';
 
 const ReviewsContainer = styled.div`
     font-family: "Graphik Webfont", -apple-system, system-ui, Roboto, "Helvetica", "Arial", "sans-serif";
     display:flex;
     flex-direction: column;
-    padding: 0px 300px 0px 30px;
+    padding: 0px 0px 0px 30px;
     
   `;
 
@@ -22,14 +23,20 @@ export default class App extends React.Component {
     this.state = {
       reviewsForItem: [],
       reviewsForShop: [],
-      tab: 'reviewsItem',
+      reviewsTabItem: 'reviewsItem',
       loading: false,
       currentPage: 1,
       reviewsPerPage: 4,
+      isOpen: false,
+      currentItemReview: [],
+      currentShopReview: [],
     };
     this.getAllReviewsForItem = this.getAllReviewsForItem.bind(this);
     this.getAllReviewsForShop = this.getAllReviewsForShop.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleModalClick = this.handleModalClick.bind(this);
+    this.handleClickIdItem = this.handleClickIdItem.bind(this);
+    this.handleClickIdShop = this.handleClickIdShop.bind(this);
   }
 
   componentDidMount() {
@@ -43,7 +50,7 @@ export default class App extends React.Component {
         this.setState({
           reviewsForItem: results.data,
         });
-      })
+      }, () => console.log(this.state))
       .catch((err) => {
         console.error(err);
       });
@@ -78,14 +85,43 @@ export default class App extends React.Component {
 
   handleClick(e) {
     this.setState({
-      tab: e.target.value,
+      [e.target.className]: e.target.value,
+    });
+  }
+
+  handleClickIdItem(id) {
+    const { reviewsForItem } = this.state;
+    for (let i = 0; i < reviewsForItem.length; i += 1) {
+      if (reviewsForItem[i].id === id) {
+        this.setState({
+          currentItemReview: reviewsForItem[i],
+        });
+      }
+    }
+  }
+
+  handleClickIdShop(id) {
+    const { reviewsForShop } = this.state;
+    for (let i = 0; i < reviewsForShop.length; i += 1) {
+      if (reviewsForShop[i].id === id) {
+        this.setState({
+          currentShopReview: reviewsForShop[i],
+        });
+      }
+    }
+  }
+
+  handleModalClick() {
+    const { isOpen } = this.state;
+    this.setState({
+      isOpen: !isOpen,
     });
   }
 
   render() {
     const {
-      reviewsForItem, reviewsForShop, tab, loading, currentPage,
-      reviewsPerPage,
+      reviewsForItem, reviewsForShop, reviewsTabItem, loading, currentPage,
+      reviewsPerPage, isOpen, currentShopReview, currentItemReview,
     } = this.state;
     const indexOfLastReview = currentPage * reviewsPerPage;
     const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
@@ -95,7 +131,7 @@ export default class App extends React.Component {
       currentPage: pageNumber,
     });
 
-    if (tab === 'reviewsItem') {
+    if (reviewsTabItem === 'reviewsItem') {
       return (
         <ReviewsContainer className="ReviewsContainer">
           <ReviewsHeader
@@ -107,6 +143,15 @@ export default class App extends React.Component {
             reviewsForItem={currentReviewsForItem}
             getRating={this.getRating}
             loading={loading}
+            isOpen={isOpen}
+            handleModalClick={this.handleModalClick}
+            handleClickIdItem={this.handleClickIdItem}
+          />
+          <ReviewsModal
+            isOpen={isOpen}
+            handleModalClick={this.handleModalClick}
+            currentReview={currentItemReview}
+            getRating={this.getRating}
           />
           <Pagination
             reviewsPerPage={reviewsPerPage}
@@ -115,6 +160,9 @@ export default class App extends React.Component {
           />
           <ReviewsPhotoCarousel
             reviewsForItem={reviewsForItem}
+            isOpen={isOpen}
+            handleModalClick={this.handleModalClick}
+            handleClickIdItem={this.handleClickIdItem}
           />
         </ReviewsContainer>
       );
@@ -130,6 +178,15 @@ export default class App extends React.Component {
           reviewsForShop={currentReviewsForShop}
           getRating={this.getRating}
           loading={loading}
+          isOpen={isOpen}
+          handleModalClick={this.handleModalClick}
+          handleClickIdShop={this.handleClickIdShop}
+        />
+        <ReviewsModal
+          isOpen={isOpen}
+          handleModalClick={this.handleModalClick}
+          currentReview={currentShopReview}
+          getRating={this.getRating}
         />
         <Pagination
           reviewsPerPage={reviewsPerPage}
@@ -138,6 +195,9 @@ export default class App extends React.Component {
         />
         <ReviewsPhotoCarousel
           reviewsForItem={reviewsForItem}
+          isOpen={isOpen}
+          handleModalClick={this.handleModalClick}
+          handleClickIdItem={this.handleClickIdItem}
         />
       </ReviewsContainer>
     );

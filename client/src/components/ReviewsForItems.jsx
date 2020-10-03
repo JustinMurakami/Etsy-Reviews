@@ -1,4 +1,5 @@
 import React from 'react';
+import ReviewsModal from './ReviewsModal.jsx'
 import styled from 'styled-components';
 import { FaStar } from 'react-icons/fa';
 
@@ -63,6 +64,7 @@ const ReviewsForItemsContainer = styled.div`
     margin: 0px 0px;
   }
   .review-review-pic {
+    cursor:pointer;
     justify-content: flex-end;
     vertical-align: middle;
     height: 14vw;
@@ -72,7 +74,9 @@ const ReviewsForItemsContainer = styled.div`
 `;
 
 const ReviewsforItem = (props) => {
-  const { reviewsForItem, getRating, loading } = props;
+  const {
+    reviewsForItem, getRating, loading, isOpen, handleModalClick,handleClick, handleClickIdItem,
+  } = props;
 
   if (loading) {
     return <h2> Loading...</h2>;
@@ -96,9 +100,11 @@ const ReviewsforItem = (props) => {
                 {review.review}
               </p>
             </div>
-            <img className="review-review-pic" src={review.reviewPicDog} alt="" />
+            <a  className="review-review-pic"  onClick={() => {handleModalClick(); handleClickIdItem(review.id);}} >
+              <img className="review-review-pic" src={review.reviewPicDog} alt="" />
+              <ReviewsModal />
+            </a>
           </div>
-
         </div>
       ))}
     </ReviewsForItemsContainer>

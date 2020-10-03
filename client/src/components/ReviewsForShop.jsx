@@ -1,4 +1,5 @@
 import React from 'react';
+import ReviewsModal from './ReviewsModal.jsx'
 import styled from 'styled-components';
 import { FaStar } from 'react-icons/fa';
 
@@ -58,6 +59,7 @@ const ReviewsForShopContainer = styled.div`
     height: 14vw;
     width: 14vw;
     border-radius: 10%;
+    cursor: pointer;
   }
   #review-shop-title {
     font-size: 13px;
@@ -71,6 +73,7 @@ const ReviewsForShopContainer = styled.div`
     height:10%;
     width:4%;
     border-radius: 10%;
+    cursor:pointer;
   }
   #review-shop-description {
     display:inline-flex;
@@ -81,11 +84,12 @@ const ReviewsForShopContainer = styled.div`
     color: #595959;
     text-decoration: underline;
     transition: opacity 200ms ease-out;
+    cursor:pointer;
   }
 `;
 
 const ReviewsForShop = (props) => {
-  const { reviewsForShop, getRating, loading } = props;
+  const { reviewsForShop, getRating, loading, handleModalClick, handleClickIdShop } = props;
   if (loading) {
     return <h2> Loading...</h2>;
   }
@@ -105,7 +109,10 @@ const ReviewsForShop = (props) => {
                 {review.review}
               </p>
             </div>
-            <img className="review-review-pic" src={review.reviewPic} alt="" />
+            <a  className="review-review-pic"  onClick={() => {handleModalClick(); handleClickIdShop(review.id);}} >
+              <img className="review-review-pic" src={review.reviewPicDog} alt="" />
+              <ReviewsModal />
+            </a>
           </div>
           <div className="review-rating-text">
             <p id="review-shop-title">Purchased Item: </p>
