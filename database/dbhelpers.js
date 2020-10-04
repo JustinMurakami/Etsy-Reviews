@@ -21,16 +21,26 @@ const dbHelpers = {
       }
     });
   },
-  // getOneReviewForItem: (id, callback) => {
-  //   const queryString = `Select * from users, reviewsForItem where users.id=${id} and reviewsForItem.userID =${id};`;
-  //   db.query(queryString, (err, result) => {
-  //     if (err) {
-  //       callback(err);
-  //     } else {
-  //       callback(null, result);
-  //     }
-  //   });
-  // },
+  getOrderedReviewsForItem: (callback) => {
+    const queryString = 'Select * from users, reviewsForItem where users.id=reviewsForItem.userID ORDER BY reviewsForItem.reviewDate DESC;';
+    db.query(queryString, (err, result) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, result);
+      }
+    });
+  },
+  getOrderedReviewsForShop: (callback) => {
+    const queryString = 'Select * from users, reviewsForShop where users.id=reviewsForShop.userID ORDER BY reviewsForShop.reviewDate DESC;';
+    db.query(queryString, (err, result) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, result);
+      }
+    });
+  },
 };
 
 module.exports = dbHelpers;

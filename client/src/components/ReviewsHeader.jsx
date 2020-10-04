@@ -68,9 +68,9 @@ const ReviewsHeader = (props) => {
           <button type="button" className="reviewsTabItem" tabIndex="0" role="tab" value="reviewsShop" onClick={handleClick}>Reviews for this shop <span id="reviews-ratings">{reviewsForShop.length}</span></button>
         </div>
       </div>
-      <div className="reviews-sort-list">
+      {/* <div className="reviews-sort-list">
         <button type="button" className="reviews-sort-list-button">Sort by: Recommended <FaCaretDown/> </button>
-      </div>
+      </div> */}
     </ReviewsHeaderContainer>
   );
 };

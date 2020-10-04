@@ -76,7 +76,7 @@ const OverlayStyle = styled.div`
 `;
 
 const ReviewsModal = (props) => {
-  const { isOpen, handleModalClick, currentReview, getRating} = props;
+  const { isOpen, handleModalClick, currentReview, getRating, correctDate} = props;
   if (!isOpen) return null;
   return (
     <div>
@@ -87,7 +87,7 @@ const ReviewsModal = (props) => {
             <p className="reviews-usertitle">
               <img src={currentReview.userPhoto} className="reviews-userphoto" alt="" />
               <span id="review-username">{currentReview.userName}</span>
-              <span id="review-date">{currentReview.reviewDate}</span>
+              <span id="review-date">{correctDate(currentReview.reviewDate)}</span>
             </p>
             <div className="review-rating-pic">
               <div className="review-rating-text">

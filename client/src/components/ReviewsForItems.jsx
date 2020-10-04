@@ -75,7 +75,7 @@ const ReviewsForItemsContainer = styled.div`
 
 const ReviewsforItem = (props) => {
   const {
-    reviewsForItem, getRating, loading, isOpen, handleModalClick,handleClick, handleClickIdItem,
+    reviewsForItem, getRating, loading, isOpen, handleModalClick,handleClick, handleClickIdItem, correctDate, 
   } = props;
 
   if (loading) {
@@ -88,7 +88,7 @@ const ReviewsforItem = (props) => {
           <p className="reviews-usertitle">
             <img src={review.userPhoto} className="reviews-userphoto" alt="" />
             <span id="review-username">{review.userName}</span>
-            <span id="review-date">{review.reviewDate}</span>
+            <span id="review-date">{correctDate(review.reviewDate)}</span>
           </p>
           <div className="review-rating-pic">
             <div className="review-rating-text">

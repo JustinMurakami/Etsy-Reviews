@@ -37,14 +37,23 @@ server.get('/reviewsShop/all', (req, res) => {
   });
 });
 
-// server.get('/reviewsItem/:id', (req, res) => {
-//   dbHelpers.getOneReviewForItem(req.params.id, (err, results) => {
-//     if (err) {
-//       res.status(404).send(err);
-//     } else {
-//       res.status(200).send(results);
-//     }
-//   });
-// });
+server.get('/reviewsItem/all/newest', (req, res) => {
+  dbHelpers.getOrderedReviewsForItem((err, results) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send(results);
+    }
+  });
+});
+server.get('/reviewsShop/all/newest', (req, res) => {
+  dbHelpers.getOrderedReviewsForShop((err, results) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send(results);
+    }
+  });
+});
 
 server.listen(port, () => console.log(`listening on ${port}`));

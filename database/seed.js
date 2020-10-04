@@ -18,7 +18,7 @@ const createReviewForItem = () => {
   reviewforItem.reviewPicDog = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(37))}`;
   reviewforItem.reviewPicCat = `http://bit.ly/etsycats${Math.ceil(Math.random() * Math.ceil(40))}`;
   reviewforItem.reviewRating = Math.floor(Math.random() * (5 - 2 + 1) + 2);
-  reviewforItem.reviewDate = `${datesArr[Math.floor(Math.random() * Math.floor(datesArr.length))]}`;
+  reviewforItem.reviewDate = faker.date.past();
   reviewforItem.style = `${stylesArr[Math.floor(Math.random() * Math.floor(stylesArr.length))]}`;
   return reviewforItem;
 };
@@ -29,7 +29,7 @@ const createReviewForShop = () => {
   reviewForShop.review = faker.lorem.sentences() + faker.lorem.sentences();
   reviewForShop.reviewPicDog = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(37))}`;
   reviewForShop.reviewRating = Math.floor(Math.random() * (5 - 2 + 1) + 2);
-  reviewForShop.reviewDate = `${datesArr[Math.floor(Math.random() * Math.floor(datesArr.length))]}`;
+  reviewForShop.reviewDate = faker.date.past();
   reviewForShop.purchasedItemDescription = faker.lorem.sentence();
   reviewForShop.purchasedItemPicDog = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(37))}`;
   reviewForShop.purchasedItemPicCat = `http://bit.ly/etsycats${Math.ceil(Math.random() * Math.ceil(40))}`;
@@ -96,3 +96,5 @@ function seedMe() {
 }
 
 seedMe();
+
+//`${datesArr[Math.floor(Math.random() * Math.floor(datesArr.length))]}`;

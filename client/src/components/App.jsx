@@ -22,7 +22,9 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       reviewsForItem: [],
+      reviewsForItemOrdered: [],
       reviewsForShop: [],
+      reviewsForShopOrdered: [],
       reviewsTabItem: 'reviewsItem',
       loading: false,
       currentPage: 1,
@@ -37,11 +39,14 @@ export default class App extends React.Component {
     this.handleModalClick = this.handleModalClick.bind(this);
     this.handleClickIdItem = this.handleClickIdItem.bind(this);
     this.handleClickIdShop = this.handleClickIdShop.bind(this);
+    this.getOrderdReviewsForItem = this.getOrderdReviewsForItem.bind(this);
+    this.getOrderdReviewsForShop = this.getOrderdReviewsForShop.bind(this);
   }
 
   componentDidMount() {
     this.getAllReviewsForItem();
     this.getAllReviewsForShop();
+    this.getOrderdReviewsForItem();
   }
 
   getAllReviewsForItem() {
@@ -56,6 +61,18 @@ export default class App extends React.Component {
       });
   }
 
+  getOrderdReviewsForItem() {
+    axios.get('/reviewsItem/all/newest')
+      .then((results) => {
+        this.setState({
+          reviewsForItemOrdered: results.data,
+        });
+      }, () => console.log(this.state))
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   getAllReviewsForShop() {
     axios.get('/reviewsShop/all')
       .then((results) => {
@@ -63,6 +80,18 @@ export default class App extends React.Component {
           reviewsForShop: results.data,
         });
       })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  getOrderdReviewsForShop() {
+    axios.get('/reviewsShop/all/newest')
+      .then((results) => {
+        this.setState({
+          reviewsForShopOrdered: results.data,
+        });
+      }, () => console.log(this.state))
       .catch((err) => {
         console.error(err);
       });
@@ -130,6 +159,12 @@ export default class App extends React.Component {
     const paginate = (pageNumber) => this.setState({
       currentPage: pageNumber,
     });
+    const correctDate = (date) => {
+      let result = '';
+      const dateArr = date.split(' ');
+      result = `${dateArr[1]} ${dateArr[2]}, ${dateArr[3]}`;
+      return result;
+    };
 
     if (reviewsTabItem === 'reviewsItem') {
       return (
@@ -146,23 +181,27 @@ export default class App extends React.Component {
             isOpen={isOpen}
             handleModalClick={this.handleModalClick}
             handleClickIdItem={this.handleClickIdItem}
+            correctDate={correctDate}
           />
           <ReviewsModal
             isOpen={isOpen}
             handleModalClick={this.handleModalClick}
             currentReview={currentItemReview}
             getRating={this.getRating}
+            correctDate={correctDate}
           />
           <Pagination
             reviewsPerPage={reviewsPerPage}
             totalReviews={reviewsForItem.length}
             paginate={paginate}
+            currentPage={currentPage}
           />
           <ReviewsPhotoCarousel
             reviewsForItem={reviewsForItem}
             isOpen={isOpen}
             handleModalClick={this.handleModalClick}
             handleClickIdItem={this.handleClickIdItem}
+            correctDate={correctDate}
           />
         </ReviewsContainer>
       );
@@ -181,23 +220,28 @@ export default class App extends React.Component {
           isOpen={isOpen}
           handleModalClick={this.handleModalClick}
           handleClickIdShop={this.handleClickIdShop}
+          correctDate={correctDate}
         />
         <ReviewsModal
           isOpen={isOpen}
           handleModalClick={this.handleModalClick}
           currentReview={currentShopReview}
           getRating={this.getRating}
+          correctDate={correctDate}
         />
         <Pagination
           reviewsPerPage={reviewsPerPage}
           totalReviews={reviewsForShop.length}
           paginate={paginate}
+          currentPage={currentPage}
+          correctDate={correctDate}
         />
         <ReviewsPhotoCarousel
           reviewsForItem={reviewsForItem}
           isOpen={isOpen}
           handleModalClick={this.handleModalClick}
           handleClickIdItem={this.handleClickIdItem}
+          correctDate={correctDate}
         />
       </ReviewsContainer>
     );
