@@ -30,6 +30,7 @@ export default class App extends React.Component {
       currentPage: 1,
       reviewsPerPage: 4,
       isOpen: false,
+      x: 0,
       currentItemReview: [],
       currentShopReview: [],
     };
@@ -150,7 +151,7 @@ export default class App extends React.Component {
   render() {
     const {
       reviewsForItem, reviewsForShop, reviewsTabItem, loading, currentPage,
-      reviewsPerPage, isOpen, currentShopReview, currentItemReview,
+      reviewsPerPage, isOpen, currentShopReview, currentItemReview, x,
     } = this.state;
     const indexOfLastReview = currentPage * reviewsPerPage;
     const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
@@ -164,6 +165,28 @@ export default class App extends React.Component {
       const dateArr = date.split(' ');
       result = `${dateArr[1]} ${dateArr[2]}, ${dateArr[3]}`;
       return result;
+    };
+    const goLeft = () => {
+      if (x === 0) {
+        this.setState({
+          x: 0,
+        });
+      } else {
+        this.setState({
+          x: x + 400,
+        });
+      }
+    };
+    const goRight = () => {
+      if (x === -3600) {
+        this.setState({
+          x: -3600,
+        });
+      } else {
+        this.setState({
+          x: x - 400,
+        });
+      }
     };
 
     if (reviewsTabItem === 'reviewsItem') {
@@ -202,6 +225,9 @@ export default class App extends React.Component {
             handleModalClick={this.handleModalClick}
             handleClickIdItem={this.handleClickIdItem}
             correctDate={correctDate}
+            x={x}
+            goLeft={goLeft}
+            goRight={goRight}
           />
         </ReviewsContainer>
       );

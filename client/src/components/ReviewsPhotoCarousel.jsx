@@ -6,15 +6,11 @@ import ReviewsModal from './ReviewsModal.jsx'
 const ReviewsPhotoCarouselContainer = styled.div`
   padding: 9px;
   .reviews-carousel {
-    flex-flow: row;
     position: relative;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
     display:flex;
     align-content: center;
     overflow:hidden;
-    width: 70vw;
+    width: 71vw;
   }
   .reviews-carousel-title {
     margin: 0px 0px 12px;
@@ -39,6 +35,7 @@ const ReviewsPhotoCarouselContainer = styled.div`
     top: 50%;
     transform: translateY(-50%);
     background-color: white;
+    opacity: ${(props) => (props.x === 0 ? '0' : '1')};
     border:none;
     border-radius: 50%;
     outline: none;
@@ -60,70 +57,39 @@ const ReviewsPhotoCarouselContainer = styled.div`
   }
 `;
 
-class ReviewsPhotoCarousel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      x: 0,
-    };
-  }
+const ReviewsPhotoCarousel = (props) => {
+  const {
+    reviewsForItem, handleModalClick, handleClickIdItem, x, goLeft, goRight,
+  } = props;
 
-  render() {
-    const { reviewsForItem, handleModalClick, handleClickIdItem } = this.props;
-    const { x } = this.state;
+  return (
+    <ReviewsPhotoCarouselContainer className="ReviewsPhotoCarouselContainer">
+      <div className="reviews-carousel-title">Photos from reviews</div>
+      <div className="reviews-carousel">
+        {reviewsForItem.map((review) => (
+          <div className="reviews-carousel-item" key={review.id} style={{ transform: `translateX(${x}%)` }}>
+            <a className="reviews-carousel-pic"  onClick={() => {handleModalClick(); handleClickIdItem(review.id);}} >
+              <img className="reviews-carousel-pic" src={review.reviewPicDog} alt="" />
+              <ReviewsModal />
+            </a>
+          </div>
+        ))}
+        <button type="button" id="reviews-carousel-btn-left" onClick={goLeft}>
+          <FaAngleLeft />
+        </button>
+        <button
+          type="button"
+          id="reviews-carousel-btn-right"
+          onClick={() => {
+            goRight();
+          }}
+        >
+          <FaAngleRight />
+        </button>
+      </div>
 
-    const goLeft = () => {
-      if (x === 0) {
-        this.setState({
-          x: 0,
-        });
-      } else {
-        this.setState({
-          x: x + 400,
-        });
-      }
-    };
-    const goRight = () => {
-      if (x === -3600) {
-        this.setState({
-          x: -3600,
-        });
-      } else {
-        this.setState({
-          x: x - 400,
-        });
-      }
-    };
-
-    return (
-      <ReviewsPhotoCarouselContainer className="ReviewsPhotoCarouselContainer">
-        <div className="reviews-carousel-title">Photos from reviews</div>
-        <div className="reviews-carousel">
-          {reviewsForItem.map((review) => (
-            <div className="reviews-carousel-item" key={review.id} style={{ transform: `translateX(${this.state.x}%)` }}>
-              <a className="reviews-carousel-pic"  onClick={() => {handleModalClick(); handleClickIdItem(review.id);}} >
-                <img className="reviews-carousel-pic" src={review.reviewPicDog} alt="" />
-                <ReviewsModal />
-              </a>
-            </div>
-          ))}
-          <button type="button" id="reviews-carousel-btn-left" onClick={goLeft}>
-            <FaAngleLeft />
-          </button>
-          <button
-            type="button"
-            id="reviews-carousel-btn-right"
-            onClick={() => {
-              goRight();
-            }}
-          >
-            <FaAngleRight />
-          </button>
-        </div>
-
-      </ReviewsPhotoCarouselContainer>
-    );
-  }
+    </ReviewsPhotoCarouselContainer>
+  );
 };
 
 export default ReviewsPhotoCarousel;
