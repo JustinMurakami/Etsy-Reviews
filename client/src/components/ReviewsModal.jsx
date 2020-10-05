@@ -9,7 +9,7 @@ const ReviewsModalContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%) scale(1);
   background-color: white;
-  z-index: 10;
+  z-index: 5;
   border-radius: 10%;
   display: flex;
   flex-direction:row;
@@ -73,6 +73,7 @@ const OverlayStyle = styled.div`
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, .5);
+  z-index: 1;
 `;
 
 const ReviewsModal = (props) => {

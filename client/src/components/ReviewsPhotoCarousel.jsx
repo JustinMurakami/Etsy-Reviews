@@ -32,14 +32,15 @@ const ReviewsPhotoCarouselContainer = styled.div`
     font-color:#222222;
     position: absolute;
     left: 0;
+    margin: 0px 0px 0px 10px;
     top: 50%;
     transform: translateY(-50%);
     background-color: white;
-    opacity: ${(props) => (props.x === 0 ? '0' : '1')};
     border:none;
     border-radius: 50%;
     outline: none;
     cursor:pointer;
+    display: ${(props) => (props.x === 0 ? 'none;' : 'block;')};
   }
   #reviews-carousel-btn-right {
     font-size: 24px;
@@ -47,6 +48,7 @@ const ReviewsPhotoCarouselContainer = styled.div`
     font-weight:100px;
     position: absolute;
     right: 0;
+    margin: 0px 10px 0px 0px;
     top: 50%;
     transform: translateY(-50%);
     background-color: white;
@@ -54,6 +56,7 @@ const ReviewsPhotoCarouselContainer = styled.div`
     border-radius:50%;
     outline: none;
     cursor:pointer;
+    display: ${(props) => (props.x === -3600 ? 'none' : '')};
   }
 `;
 
@@ -63,7 +66,7 @@ const ReviewsPhotoCarousel = (props) => {
   } = props;
 
   return (
-    <ReviewsPhotoCarouselContainer className="ReviewsPhotoCarouselContainer">
+    <ReviewsPhotoCarouselContainer x={x} className="ReviewsPhotoCarouselContainer">
       <div className="reviews-carousel-title">Photos from reviews</div>
       <div className="reviews-carousel">
         {reviewsForItem.map((review) => (

@@ -22,15 +22,14 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       reviewsForItem: [],
-      reviewsForItemOrdered: [],
       reviewsForShop: [],
-      reviewsForShopOrdered: [],
-      reviewsTabItem: 'reviewsItem',
+      reviewsTab: 'reviewsItem',
       loading: false,
       currentPage: 1,
       reviewsPerPage: 4,
       isOpen: false,
       x: 0,
+      dropdown: false,
       currentItemReview: [],
       currentShopReview: [],
     };
@@ -40,14 +39,14 @@ export default class App extends React.Component {
     this.handleModalClick = this.handleModalClick.bind(this);
     this.handleClickIdItem = this.handleClickIdItem.bind(this);
     this.handleClickIdShop = this.handleClickIdShop.bind(this);
-    this.getOrderdReviewsForItem = this.getOrderdReviewsForItem.bind(this);
-    this.getOrderdReviewsForShop = this.getOrderdReviewsForShop.bind(this);
+    this.handleDropdown = this.handleDropdown.bind(this);
+    this.handleSortNewest = this.handleSortNewest.bind(this);
+    this.handleSortRecommended = this.handleSortRecommended.bind(this);
   }
 
   componentDidMount() {
     this.getAllReviewsForItem();
     this.getAllReviewsForShop();
-    this.getOrderdReviewsForItem();
   }
 
   getAllReviewsForItem() {
@@ -66,7 +65,7 @@ export default class App extends React.Component {
     axios.get('/reviewsItem/all/newest')
       .then((results) => {
         this.setState({
-          reviewsForItemOrdered: results.data,
+          reviewsForItem: results.data,
         });
       }, () => console.log(this.state))
       .catch((err) => {
@@ -90,7 +89,7 @@ export default class App extends React.Component {
     axios.get('/reviewsShop/all/newest')
       .then((results) => {
         this.setState({
-          reviewsForShopOrdered: results.data,
+          reviewsForShop: results.data,
         });
       }, () => console.log(this.state))
       .catch((err) => {
@@ -115,7 +114,7 @@ export default class App extends React.Component {
 
   handleClick(e) {
     this.setState({
-      [e.target.className]: e.target.value,
+      reviewsTab: e.target.value,
     });
   }
 
@@ -148,10 +147,29 @@ export default class App extends React.Component {
     });
   }
 
+  handleDropdown() {
+    const { dropdown } = this.state;
+    this.setState({
+      dropdown: !dropdown,
+    });
+  }
+
+  handleSortNewest() {
+    this.getOrderdReviewsForItem();
+    this.getOrderdReviewsForShop();
+    this.handleDropdown();
+  }
+
+  handleSortRecommended() {
+    this.getAllReviewsForItem();
+    this.getAllReviewsForShop();
+    this.handleDropdown();
+  }
+
   render() {
     const {
-      reviewsForItem, reviewsForShop, reviewsTabItem, loading, currentPage,
-      reviewsPerPage, isOpen, currentShopReview, currentItemReview, x,
+      reviewsForItem, reviewsForShop, reviewsTab, loading, currentPage,
+      reviewsPerPage, isOpen, currentShopReview, currentItemReview, x, dropdown,
     } = this.state;
     const indexOfLastReview = currentPage * reviewsPerPage;
     const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
@@ -178,9 +196,9 @@ export default class App extends React.Component {
       }
     };
     const goRight = () => {
-      if (x === -3600) {
+      if (x === -100 * (reviewsForItem.length) + 400) {
         this.setState({
-          x: -3600,
+          x: -100 * (reviewsForItem.length) + 400,
         });
       } else {
         this.setState({
@@ -189,13 +207,18 @@ export default class App extends React.Component {
       }
     };
 
-    if (reviewsTabItem === 'reviewsItem') {
+    if (reviewsTab === 'reviewsItem') {
       return (
         <ReviewsContainer className="ReviewsContainer">
           <ReviewsHeader
             reviewsForShop={reviewsForShop}
             reviewsForItem={reviewsForItem}
             handleClick={this.handleClick}
+            handleSortNewest={this.handleSortNewest}
+            handleSortRecommended={this.handleSortRecommended}
+            handleDropdown={this.handleDropdown}
+            reviewsTab={reviewsTab}
+            dropdown={dropdown}
           />
           <ReviewsForItem
             reviewsForItem={currentReviewsForItem}
@@ -238,6 +261,11 @@ export default class App extends React.Component {
           reviewsForShop={reviewsForShop}
           reviewsForItem={reviewsForItem}
           handleClick={this.handleClick}
+          handleSortNewest={this.handleSortNewest}
+          handleSortRecommended={this.handleSortRecommended}
+          handleDropdown={this.handleDropdown}
+          reviewsTab={reviewsTab}
+          dropdown={dropdown}
         />
         <ReviewsForShop
           reviewsForShop={currentReviewsForShop}

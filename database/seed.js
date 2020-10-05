@@ -1,7 +1,6 @@
 const faker = require('faker');
 const db = require('./index.js');
 
-const datesArr = ['May 23, 2020', 'Jan 22, 2020', 'Nov 7, 2019', 'Sep 22, 2020', 'Aug 30, 2020', 'Oct 14, 2019', ' Apr 13, 2020', 'Aug 31, 2020', 'Aug 19, 2020', 'Jun 18, 2020', 'Mar 12, 2020', 'Oct 8, 2019', 'Nov 11, 2019'];
 const stylesArr = ['Digital Only', 'Canvas 8x10', 'Canvas 12x16', 'Canvas 18x24', 'Poster 8x10', 'Poster 12x16', 'Poster 18x24', 'Poster 30x40'];
 
 const createUser = () => {
@@ -16,7 +15,7 @@ const createReviewForItem = () => {
   reviewforItem.userID = Math.ceil(Math.random() * (100));
   reviewforItem.review = faker.lorem.sentences() + faker.lorem.sentences();
   reviewforItem.reviewPicDog = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(37))}`;
-  reviewforItem.reviewPicCat = `http://bit.ly/etsycats${Math.ceil(Math.random() * Math.ceil(40))}`;
+  // reviewforItem.reviewPicCat = `http://bit.ly/etsycats${Math.ceil(Math.random() * Math.ceil(40))}`;
   reviewforItem.reviewRating = Math.floor(Math.random() * (5 - 2 + 1) + 2);
   reviewforItem.reviewDate = faker.date.past();
   reviewforItem.style = `${stylesArr[Math.floor(Math.random() * Math.floor(stylesArr.length))]}`;
@@ -32,7 +31,7 @@ const createReviewForShop = () => {
   reviewForShop.reviewDate = faker.date.past();
   reviewForShop.purchasedItemDescription = faker.lorem.sentence();
   reviewForShop.purchasedItemPicDog = `http://bit.ly/etsydog${Math.ceil(Math.random() * Math.ceil(37))}`;
-  reviewForShop.purchasedItemPicCat = `http://bit.ly/etsycats${Math.ceil(Math.random() * Math.ceil(40))}`;
+  // reviewForShop.purchasedItemPicCat = `http://bit.ly/etsycats${Math.ceil(Math.random() * Math.ceil(40))}`;
   return reviewForShop;
 };
 
@@ -96,5 +95,3 @@ function seedMe() {
 }
 
 seedMe();
-
-//`${datesArr[Math.floor(Math.random() * Math.floor(datesArr.length))]}`;
