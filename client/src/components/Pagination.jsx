@@ -7,7 +7,6 @@ const PaginationContainer = styled.nav`
   align-items: center;
   .reviews-pagination {
     display:inline-flex;
-    justify-content: flex-start;
     list-style: none;
   }
   .page-link {
@@ -39,7 +38,7 @@ const PaginationContainer = styled.nav`
 const Pagination = (props) => {
   const { reviewsPerPage, totalReviews, paginate, currentPage } = props;
   const pageNumbers = [];
-  for (let i = 1; i < Math.ceil(totalReviews / reviewsPerPage); i += 1) {
+  for (let i = 1; i <= Math.ceil(totalReviews / reviewsPerPage); i += 1) {
     pageNumbers.push(i);
   }
   const previous = currentPage - 1;
@@ -61,9 +60,7 @@ const Pagination = (props) => {
           <li className="reviews-page-item">
             <button type="button" onClick={() => paginate(secondPage)} className="page-link">2</button>
           </li>
-          <li className="reviews-page-period">
-            ... 
-          </li>
+          <li className="reviews-page-period">... </li>
           <li className="reviews-page-item">
             <button type="button" onClick={() => paginate(lastPage)} className="page-link">{lastPage}</button>
           </li>
@@ -87,9 +84,7 @@ const Pagination = (props) => {
           <li className="reviews-page-item">
             <button type="button" className="page-link-current">2</button>
           </li>
-          <li className="reviews-page-period">
-            ... 
-          </li>
+          <li className="reviews-page-period">... </li>
           <li className="reviews-page-item">
             <button type="button" onClick={() => paginate(lastPage)} className="page-link">{lastPage}</button>
           </li>
@@ -110,9 +105,7 @@ const Pagination = (props) => {
           <li className="reviews-page-item">
             <button type="button" onClick={() => paginate(firstPage)} className="page-link">1</button>
           </li>
-          <li className="reviews-page-period">
-            ... 
-          </li>
+          <li className="reviews-page-period">... </li>
           <li className="reviews-page-item">
             <button type="button" className="page-link-current">{currentPage}</button>
           </li>
@@ -136,9 +129,7 @@ const Pagination = (props) => {
           <li className="reviews-page-item">
             <button type="button" onClick={() => paginate(firstPage)} className="page-link">1</button>
           </li>
-          <li className="reviews-page-period">
-            ... 
-          </li>
+          <li className="reviews-page-period">... </li>
           <li className="reviews-page-item">
             <button type="button" onClick={() => paginate(lastPage - 1)} className="page-link">{currentPage - 1}</button>
           </li>
@@ -161,15 +152,11 @@ const Pagination = (props) => {
         <li className="reviews-page-item">
           <button type="button" onClick={() => paginate(firstPage)} className="page-link">1</button>
         </li>
-        <li className="reviews-page-period">
-          ... 
-        </li>
+        <li className="reviews-page-period">... </li>
         <li className="reviews-page-item">
           <button type="button" className="page-link-current">{currentPage}</button>
         </li>
-        <li className="reviews-page-period">
-          ... 
-        </li>
+        <li className="reviews-page-period">... </li>
         <li className="reviews-page-item">
           <button type="button" onClick={() => paginate(lastPage)} className="page-link">{lastPage}</button>
         </li>

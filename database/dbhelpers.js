@@ -2,7 +2,7 @@ const db = require('./index.js');
 
 const dbHelpers = {
   getAllReviewsForItem: (callback) => {
-    const queryString = 'Select * from users, reviewsForItem where users.id = reviewsForItem.userID;';
+    const queryString = 'Select * from users, reviewsForItemDogs where users.id = reviewsForItemDogs.userID AND users.category=4 LIMIT 28;';
     db.query(queryString, (err, result) => {
       if (err) {
         callback(err);
@@ -12,7 +12,7 @@ const dbHelpers = {
     });
   },
   getAllReviewsForShop: (callback) => {
-    const queryString = 'Select * from users, reviewsForShop where users.id = reviewsForShop.userID;';
+    const queryString = 'Select * from users, reviewsForShopDogs where users.id = reviewsForShopDogs.userID AND users.category=4 LIMIT 44;';
     db.query(queryString, (err, result) => {
       if (err) {
         callback(err);
@@ -22,7 +22,7 @@ const dbHelpers = {
     });
   },
   getOrderedReviewsForItem: (callback) => {
-    const queryString = 'Select * from users, reviewsForItem where users.id=reviewsForItem.userID ORDER BY reviewsForItem.reviewDate DESC;';
+    const queryString = 'Select * from users, reviewsForItemDogs where users.id=reviewsForItemDogs.userID AND users.category=4 ORDER BY users.id ASC reviewsForItemDogs.reviewDate DESC LIMIT 28;';
     db.query(queryString, (err, result) => {
       if (err) {
         callback(err);
@@ -32,7 +32,7 @@ const dbHelpers = {
     });
   },
   getOrderedReviewsForShop: (callback) => {
-    const queryString = 'Select * from users, reviewsForShop where users.id=reviewsForShop.userID ORDER BY reviewsForShop.reviewDate DESC;';
+    const queryString = 'Select * from users, reviewsForShopDogs where users.id=reviewsForShopDogs.userID AND users.category=4 ORDER BY reviewsForShopDogs.reviewDate DESC LIMIT 44;';
     db.query(queryString, (err, result) => {
       if (err) {
         callback(err);

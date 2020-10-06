@@ -1,81 +1,20 @@
 import React from 'react';
-import ReviewsModal from './ReviewsModal.jsx'
 import styled from 'styled-components';
-import { FaStar } from 'react-icons/fa';
+import ReviewsModal from './ReviewsModal.jsx'
 
 const ReviewsForItemsContainer = styled.div`
   .ReviewsListForItems {
     padding: 9px;
   }
-  .reviews-userphoto {
-    vertical-align: middle;
-    margin: 0px 12px 0px 0px;
-    border-radius: 50%;
-    overflow: hidden;
-    height: 36px;
-    width: 36px;
-  }
-  .reviews-usertitle {
-    align-self: center;
-    margin: 0px 0px 6px;
-  }
-  #review-username {
-    font-size: 13px;
-    line-height: 18px;
-    margin: 0px 6px 0px 0px;
-    color: #595959;
-    text-decoration: underline;
-    transition: opacity 200ms ease-out;
-  }
-  #review-date {
-    vertical-align: middle;
-    font-size: 13px;
-    line-height: 18px;
-    color: #595959;
-  }
-  .review-rating-pic {
-    display:flex;
-    justify-content:flex-start;
-  }
-  .review-rating-text {
-    justify-self: space-around;
-    flex-direction:row;
-    align-self: flex-start;
-    padding: 0px 0px 0px 48px;
-  }
-  #review-stars {
-    font-size: 18px;
-    margin: 0px 0px 6px;
-  }
-  .review-style {
-    font-size: 13px;
-    line-height: 18px;
-    font-weight: 500;
-    letter-spacing: .1px;
-    margin: 0px 0px 12px;
-  }
   #review-style-type {
     font-weight:300;
-  }
-  #review-review-text {
-    justify-content: flex-start;
-    font-size: 16px;
-    padding: 0px 30px 0px 0px;
-    margin: 0px 0px;
-  }
-  .review-review-pic {
-    cursor:pointer;
-    justify-content: flex-end;
-    vertical-align: middle;
-    height: 14vw;
-    width: 14vw;
-    border-radius: 10%;
   }
 `;
 
 const ReviewsforItem = (props) => {
   const {
-    reviewsForItem, getRating, loading, isOpen, handleModalClick,handleClick, handleClickIdItem, correctDate, 
+    reviewsForItem, getRating, loading, isOpen, handleModalClick,
+    handleClick, handleClickIdItem, correctDate,
   } = props;
 
   if (loading) {
@@ -101,7 +40,7 @@ const ReviewsforItem = (props) => {
               </p>
             </div>
             <a  className="review-review-pic"  onClick={() => {handleModalClick(); handleClickIdItem(review.id);}} >
-              <img className="review-review-pic" src={review.reviewPicDog} alt="" />
+              <img className="review-review-pic" src={review.reviewPic} alt="" />
               <ReviewsModal />
             </a>
           </div>

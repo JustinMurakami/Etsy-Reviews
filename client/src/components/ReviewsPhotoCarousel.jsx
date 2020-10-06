@@ -56,7 +56,7 @@ const ReviewsPhotoCarouselContainer = styled.div`
     border-radius:50%;
     outline: none;
     cursor:pointer;
-    display: ${(props) => (props.x === -3600 ? 'none' : '')};
+    display: ${(props) => (props.x === -100 * (props.reviewsForItem.length) + 400 ? 'none' : '')};
   }
 `;
 
@@ -66,13 +66,13 @@ const ReviewsPhotoCarousel = (props) => {
   } = props;
 
   return (
-    <ReviewsPhotoCarouselContainer x={x} className="ReviewsPhotoCarouselContainer">
+    <ReviewsPhotoCarouselContainer x={x} reviewsForItem={reviewsForItem} className="ReviewsPhotoCarouselContainer">
       <div className="reviews-carousel-title">Photos from reviews</div>
       <div className="reviews-carousel">
         {reviewsForItem.map((review) => (
           <div className="reviews-carousel-item" key={review.id} style={{ transform: `translateX(${x}%)` }}>
             <a className="reviews-carousel-pic"  onClick={() => {handleModalClick(); handleClickIdItem(review.id);}} >
-              <img className="reviews-carousel-pic" src={review.reviewPicDog} alt="" />
+              <img className="reviews-carousel-pic" src={review.reviewPic} alt="" />
               <ReviewsModal />
             </a>
           </div>
@@ -80,15 +80,7 @@ const ReviewsPhotoCarousel = (props) => {
         <button type="button" id="reviews-carousel-btn-left" onClick={goLeft}>
           <FaAngleLeft />
         </button>
-        <button
-          type="button"
-          id="reviews-carousel-btn-right"
-          onClick={() => {
-            goRight();
-          }}
-        >
-          <FaAngleRight />
-        </button>
+        <button type="button" id="reviews-carousel-btn-right" onClick={() => { goRight(); }}><FaAngleRight /></button>
       </div>
 
     </ReviewsPhotoCarouselContainer>

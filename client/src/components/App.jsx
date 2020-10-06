@@ -14,7 +14,67 @@ const ReviewsContainer = styled.div`
     display:flex;
     flex-direction: column;
     padding: 0px 0px 0px 30px;
-    
+    .reviews-userphoto {
+      vertical-align: middle;
+      margin: 0px 12px 0px 0px;
+      border-radius: 50%;
+      overflow: hidden;
+      height: 36px;
+      width: 36px;
+    }
+    .reviews-usertitle {
+      align-self: center;
+      margin: 0px 0px 6px;
+    }
+    #review-username {
+      font-size: 13px;
+      line-height: 18px;
+      margin: 0px 6px 0px 0px;
+      color: #595959;
+      text-decoration: underline;
+      transition: opacity 200ms ease-out;
+    }
+    #review-date {
+      vertical-align: middle;
+      font-size: 13px;
+      line-height: 18px;
+      color: #595959;
+    }
+    .review-rating-pic {
+      display:flex;
+      justify-content:flex-start;
+    }
+    .review-rating-text {
+      justify-self: space-around;
+      flex-direction:row;
+      align-self: flex-start;
+      padding: 0px 0px 0px 48px;
+    }
+    #review-stars {
+      font-size: 18px;
+      margin: 0px 0px 6px;
+    }
+    .review-style {
+      font-size: 13px;
+      line-height: 18px;
+      font-weight: 500;
+      letter-spacing: .1px;
+      margin: 0px 0px 12px;
+    }
+    #review-review-text {
+      justify-content: flex-start;
+      font-size: 16px;
+      padding: 0px 30px 0px 0px;
+      margin: 0px 0px;
+    }
+    .review-review-pic {
+      cursor:pointer;
+      justify-content: flex-end;
+      vertical-align: middle;
+      height: 14vw;
+      width: 14vw;
+      border-radius: 10%;
+    }
   `;
 
 export default class App extends React.Component {
@@ -24,12 +84,12 @@ export default class App extends React.Component {
       reviewsForItem: [],
       reviewsForShop: [],
       reviewsTab: 'reviewsItem',
-      loading: false,
       currentPage: 1,
       reviewsPerPage: 4,
       isOpen: false,
       x: 0,
       dropdown: false,
+      sortName: 'Recommended',
       currentItemReview: [],
       currentShopReview: [],
     };
@@ -155,12 +215,20 @@ export default class App extends React.Component {
   }
 
   handleSortNewest() {
+    this.setState({
+      sortName: 'Newest',
+      currentPage: 1,
+    });
     this.getOrderdReviewsForItem();
     this.getOrderdReviewsForShop();
     this.handleDropdown();
   }
 
   handleSortRecommended() {
+    this.setState({
+      sortName: 'Recommended',
+      currentPage: 1,
+    });
     this.getAllReviewsForItem();
     this.getAllReviewsForShop();
     this.handleDropdown();
@@ -168,8 +236,9 @@ export default class App extends React.Component {
 
   render() {
     const {
-      reviewsForItem, reviewsForShop, reviewsTab, loading, currentPage,
+      reviewsForItem, reviewsForShop, reviewsTab, currentPage,
       reviewsPerPage, isOpen, currentShopReview, currentItemReview, x, dropdown,
+      sortName,
     } = this.state;
     const indexOfLastReview = currentPage * reviewsPerPage;
     const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
@@ -219,11 +288,11 @@ export default class App extends React.Component {
             handleDropdown={this.handleDropdown}
             reviewsTab={reviewsTab}
             dropdown={dropdown}
+            sortName={sortName}
           />
           <ReviewsForItem
             reviewsForItem={currentReviewsForItem}
             getRating={this.getRating}
-            loading={loading}
             isOpen={isOpen}
             handleModalClick={this.handleModalClick}
             handleClickIdItem={this.handleClickIdItem}
@@ -266,11 +335,11 @@ export default class App extends React.Component {
           handleDropdown={this.handleDropdown}
           reviewsTab={reviewsTab}
           dropdown={dropdown}
+          sortName={sortName}
         />
         <ReviewsForShop
           reviewsForShop={currentReviewsForShop}
           getRating={this.getRating}
-          loading={loading}
           isOpen={isOpen}
           handleModalClick={this.handleModalClick}
           handleClickIdShop={this.handleClickIdShop}
@@ -296,6 +365,9 @@ export default class App extends React.Component {
           handleModalClick={this.handleModalClick}
           handleClickIdItem={this.handleClickIdItem}
           correctDate={correctDate}
+          x={x}
+          goLeft={goLeft}
+          goRight={goRight}
         />
       </ReviewsContainer>
     );
