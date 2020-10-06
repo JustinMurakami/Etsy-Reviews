@@ -22,7 +22,7 @@ const dbHelpers = {
     });
   },
   getOrderedReviewsForItem: (callback) => {
-    const queryString = 'Select * from users, reviewsForItemDogs where users.id=reviewsForItemDogs.userID AND users.category=4 ORDER BY users.id ASC reviewsForItemDogs.reviewDate DESC LIMIT 28;';
+    const queryString = 'Select * from users, reviewsForItemDogs where users.id=reviewsForItemDogs.userID ORDER BY reviewsForItemDogs.reviewDate DESC LIMIT 28;';
     db.query(queryString, (err, result) => {
       if (err) {
         callback(err);
@@ -32,7 +32,7 @@ const dbHelpers = {
     });
   },
   getOrderedReviewsForShop: (callback) => {
-    const queryString = 'Select * from users, reviewsForShopDogs where users.id=reviewsForShopDogs.userID AND users.category=4 ORDER BY reviewsForShopDogs.reviewDate DESC LIMIT 44;';
+    const queryString = 'Select * from users, reviewsForShopDogs where users.id=reviewsForShopDogs.userID ORDER BY reviewsForShopDogs.reviewDate DESC LIMIT 44;';
     db.query(queryString, (err, result) => {
       if (err) {
         callback(err);

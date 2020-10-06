@@ -175,6 +175,7 @@ export default class App extends React.Component {
   handleClick(e) {
     this.setState({
       reviewsTab: e.target.value,
+      currentPage: 1,
     });
   }
 
