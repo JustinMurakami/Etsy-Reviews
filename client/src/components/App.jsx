@@ -100,6 +100,7 @@ export default class App extends React.Component {
     this.handleClickIdItem = this.handleClickIdItem.bind(this);
     this.handleClickIdShop = this.handleClickIdShop.bind(this);
     this.handleDropdown = this.handleDropdown.bind(this);
+    this.getOrderedReviews = this.getOrderedReviews.bind(this);
     this.handleSortNewest = this.handleSortNewest.bind(this);
     this.handleSortRecommended = this.handleSortRecommended.bind(this);
   }
@@ -112,32 +113,12 @@ export default class App extends React.Component {
   getAllReviewsForItem() {
     axios.get('/reviewsItem/all')
       .then((results) => {
+        for (let i = 0; i < results.data.length; i += 1) {
+          const dateArr = results.data[i].reviewDate.split(' ');
+          results.data[i].reviewDate = `${dateArr[1]} ${dateArr[2]}, ${dateArr[3]}`;
+        }
         this.setState({
           reviewsForItem: results.data,
-        });
-      }, () => console.log(this.state))
-      .catch((err) => {
-        console.error(err);
-      });
-  }
-
-  getOrderdReviewsForItem() {
-    axios.get('/reviewsItem/all/newest')
-      .then((results) => {
-        this.setState({
-          reviewsForItem: results.data,
-        });
-      }, () => console.log(this.state))
-      .catch((err) => {
-        console.error(err);
-      });
-  }
-
-  getAllReviewsForShop() {
-    axios.get('/reviewsShop/all')
-      .then((results) => {
-        this.setState({
-          reviewsForShop: results.data,
         });
       })
       .catch((err) => {
@@ -145,13 +126,64 @@ export default class App extends React.Component {
       });
   }
 
-  getOrderdReviewsForShop() {
-    axios.get('/reviewsShop/all/newest')
+  getOrderedReviews() {
+    const { reviewsForItem, reviewsForShop } = this.state;
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const getOrderedReviewItems = () => {
+      for (let i = 0; i < reviewsForItem.length; i += 1) {
+        const datesArr = reviewsForItem[i].reviewDate.split(' ');
+        reviewsForItem[i].month = datesArr[0];
+        reviewsForItem[i].day = datesArr[1];
+        reviewsForItem[i].year = datesArr[2]
+      }
+      return reviewsForItem;
+    };
+    getOrderedReviewItems();
+    const sortedByDay = reviewsForItem.sort((a, b) => {
+      return parseFloat(b.day) - parseFloat(a.day)
+    });
+    const sortedByMonth = sortedByDay.sort((a, b) => {
+      return months.indexOf(b.month) - months.indexOf(a.month)
+    });
+    const sortedByYearItem = sortedByMonth.sort((a, b) => {
+      return parseFloat(b.year) - parseFloat(a.year)
+    });
+    const getOrderedReviewShop = () => {
+      for (let i = 0; i < reviewsForShop.length; i += 1) {
+        const datesArr = reviewsForShop[i].reviewDate.split(' ');
+        reviewsForShop[i].month = datesArr[0];
+        reviewsForShop[i].day = datesArr[1];
+        reviewsForShop[i].year = datesArr[2]
+      }
+      return reviewsForShop;
+    };
+    getOrderedReviewShop();
+    const sortedByDayShop = reviewsForShop.sort((a, b) => {
+      return parseFloat(b.day) - parseFloat(a.day)
+    });
+    const sortedByMonthShop = sortedByDayShop.sort((a, b) => {
+      return months.indexOf(b.month) - months.indexOf(a.month)
+    });
+    const sortedByYearShop = sortedByMonthShop.sort((a, b) => {
+      return parseFloat(b.year) - parseFloat(a.year)
+    });
+    this.setState({
+      reviewsForItem: sortedByYearItem,
+      reviewsForShop: sortedByYearShop,
+    });
+  }
+
+  getAllReviewsForShop() {
+    axios.get('/reviewsShop/all')
       .then((results) => {
+        for (let i = 0; i < results.data.length; i += 1) {
+          const dateArr = results.data[i].reviewDate.split(' ');
+          results.data[i].reviewDate = `${dateArr[1]} ${dateArr[2]}, ${dateArr[3]}`;
+        }
         this.setState({
           reviewsForShop: results.data,
         });
-      }, () => console.log(this.state))
+      })
       .catch((err) => {
         console.error(err);
       });
@@ -220,8 +252,7 @@ export default class App extends React.Component {
       sortName: 'Newest',
       currentPage: 1,
     });
-    this.getOrderdReviewsForItem();
-    this.getOrderdReviewsForShop();
+    this.getOrderedReviews();
     this.handleDropdown();
   }
 
@@ -248,12 +279,6 @@ export default class App extends React.Component {
     const paginate = (pageNumber) => this.setState({
       currentPage: pageNumber,
     });
-    const correctDate = (date) => {
-      let result = '';
-      const dateArr = date.split(' ');
-      result = `${dateArr[1]} ${dateArr[2]}, ${dateArr[3]}`;
-      return result;
-    };
     const goLeft = () => {
       if (x === 0) {
         this.setState({
@@ -297,14 +322,14 @@ export default class App extends React.Component {
             isOpen={isOpen}
             handleModalClick={this.handleModalClick}
             handleClickIdItem={this.handleClickIdItem}
-            correctDate={correctDate}
+
           />
           <ReviewsModal
             isOpen={isOpen}
             handleModalClick={this.handleModalClick}
             currentReview={currentItemReview}
             getRating={this.getRating}
-            correctDate={correctDate}
+
           />
           <Pagination
             reviewsPerPage={reviewsPerPage}
@@ -317,7 +342,7 @@ export default class App extends React.Component {
             isOpen={isOpen}
             handleModalClick={this.handleModalClick}
             handleClickIdItem={this.handleClickIdItem}
-            correctDate={correctDate}
+
             x={x}
             goLeft={goLeft}
             goRight={goRight}
@@ -344,28 +369,24 @@ export default class App extends React.Component {
           isOpen={isOpen}
           handleModalClick={this.handleModalClick}
           handleClickIdShop={this.handleClickIdShop}
-          correctDate={correctDate}
         />
         <ReviewsModal
           isOpen={isOpen}
           handleModalClick={this.handleModalClick}
           currentReview={currentShopReview}
           getRating={this.getRating}
-          correctDate={correctDate}
         />
         <Pagination
           reviewsPerPage={reviewsPerPage}
           totalReviews={reviewsForShop.length}
           paginate={paginate}
           currentPage={currentPage}
-          correctDate={correctDate}
         />
         <ReviewsPhotoCarousel
           reviewsForItem={reviewsForItem}
           isOpen={isOpen}
           handleModalClick={this.handleModalClick}
           handleClickIdItem={this.handleClickIdItem}
-          correctDate={correctDate}
           x={x}
           goLeft={goLeft}
           goRight={goRight}

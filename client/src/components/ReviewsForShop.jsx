@@ -33,7 +33,7 @@ const ReviewsForShopContainer = styled.div`
 
 const ReviewsForShop = (props) => {
   const {
-    reviewsForShop, getRating, handleModalClick, handleClickIdShop, correctDate,
+    reviewsForShop, getRating, handleModalClick, handleClickIdShop,
   } = props;
   return (
     <ReviewsForShopContainer className="ReviewsForShopContainer">
@@ -42,7 +42,7 @@ const ReviewsForShop = (props) => {
           <div className="reviews-usertitle">
             <img src={review.userPhoto} className="reviews-userphoto" alt="" />
             <span id="review-username">{review.userName}</span>
-            <span id="review-date">{correctDate(review.reviewDate)}</span>
+            <span id="review-date">{review.reviewDate}</span>
           </div>
           <div className="review-rating-pic">
             <div className="review-rating-text">
