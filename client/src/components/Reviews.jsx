@@ -77,7 +77,7 @@ const ReviewsContainer = styled.div`
     }
   `;
 
-export default class App extends React.Component {
+export default class Reviews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
