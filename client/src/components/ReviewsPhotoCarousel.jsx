@@ -1,125 +1,90 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaAngleRight, FaAngleLeft } from 'react-icons/fa';
+import ReviewsModal from './ReviewsModal.jsx'
 
-const ReviewsPhotoCarouselStyling = styled.div`
+const ReviewsPhotoCarouselContainer = styled.div`
+  padding: 9px;
   .reviews-carousel {
-    flex-flow: row;
     position: relative;
-    width: 100%;
-    height: 100vh;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
     display:flex;
     align-content: center;
     overflow:hidden;
+    width: 71vw;
   }
   .reviews-carousel-title {
     margin: 0px 0px 12px;
   }
 
   .reviews-carousel-item {
-    width: 154px;
-    height: 154px;
     padding: 9px;
     transition: .5s;
-    overflow: hidden;
   }
-  .reviews-carousel-image {
-    height:100%;
-    width:auto;
+  .reviews-carousel-pic {
+    width:16vw;
+    height:16vw;
     cursor:pointer;
+    border-radius:10%;
   }
 
   #reviews-carousel-btn-left {
+    font-size: 24px;
+    font-color:#222222;
     position: absolute;
     left: 0;
-    top: 7%;
+    margin: 0px 0px 0px 10px;
+    top: 50%;
     transform: translateY(-50%);
     background-color: white;
-    border-radius:50%;
+    border:none;
+    border-radius: 50%;
     outline: none;
     cursor:pointer;
-    font-size: 2vw;
-
+    display: ${(props) => (props.x === 0 ? 'none;' : 'block;')};
   }
   #reviews-carousel-btn-right {
+    font-size: 24px;
+    font-color:#222222;
+    font-weight:100px;
     position: absolute;
     right: 0;
-    top: 7%;
+    margin: 0px 10px 0px 0px;
+    top: 50%;
     transform: translateY(-50%);
     background-color: white;
+    border:none;
     border-radius:50%;
     outline: none;
     cursor:pointer;
-    font-size: 2vw;
+    display: ${(props) => (props.x === -100 * (props.reviewsForItem.length) + 400 ? 'none' : '')};
   }
 `;
 
-class ReviewsPhotoCarousel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      x: 0,
-    };
-  }
+const ReviewsPhotoCarousel = (props) => {
+  const {
+    reviewsForItem, handleModalClick, handleClickIdItem, x, goLeft, goRight,
+  } = props;
 
-  render() {
-    const { reviewsForShop } = this.props;
-    const { x } = this.state;
-    const photosArr = [];
-    reviewsForShop.map((review) => (
-      photosArr.push(review.purchasedItemPicDog)
-    ));
-    reviewsForShop.map((review) => (
-      photosArr.push(review.purchasedItemPicCat)
-    ));
-    const photosUsed = photosArr.slice(0, 25);
-    const goLeft = () => {
-      if (x === 0) {
-        this.setState({
-          x: -100 * (photosUsed.length - 1),
-        });
-      } else {
-        this.setState({
-          x: x + 100,
-        });
-      }
-    };
-    const goRight = () => {
-      if (x === -100 * (photosUsed.length - 1)) {
-        this.setState({
-          x: 0,
-        });
-      } else {
-        this.setState({
-          x: x - 100,
-        });
-      }
-    };
-    return (
-      <ReviewsPhotoCarouselStyling>
-        <div className="reviews-carousel-title">Photos from reviews</div>
-        <div className="reviews-carousel">
-          {photosUsed.map((item, index) => {
-            return (
-              <div className="reviews-carousel-item" key={index} style={{ transform: `translateX(${this.state.x}%)` }}>
-                <img className="reviews-carousel-image" src={item} alt="" />
-              </div>
-            )
-          })}
-          <button type="button" id="reviews-carousel-btn-left" onClick={goLeft}>
-            <FaAngleLeft />
-          </button>
-          <button type="button" id="reviews-carousel-btn-right" onClick={goRight}>
-            <FaAngleRight />
-          </button>
-        </div>
+  return (
+    <ReviewsPhotoCarouselContainer x={x} reviewsForItem={reviewsForItem} className="ReviewsPhotoCarouselContainer">
+      <div className="reviews-carousel-title">Photos from reviews</div>
+      <div className="reviews-carousel">
+        {reviewsForItem.map((review) => (
+          <div className="reviews-carousel-item" key={review.id} style={{ transform: `translateX(${x}%)` }}>
+            <a className="reviews-carousel-pic"  onClick={() => {handleModalClick(); handleClickIdItem(review.id);}} >
+              <img className="reviews-carousel-pic" src={review.reviewPic} alt="" />
+              <ReviewsModal />
+            </a>
+          </div>
+        ))}
+        <button type="button" id="reviews-carousel-btn-left" onClick={goLeft}>
+          <FaAngleLeft />
+        </button>
+        <button type="button" id="reviews-carousel-btn-right" onClick={() => { goRight(); }}><FaAngleRight /></button>
+      </div>
 
-      </ReviewsPhotoCarouselStyling>
-    );
-  }
+    </ReviewsPhotoCarouselContainer>
+  );
 };
 
 export default ReviewsPhotoCarousel;
